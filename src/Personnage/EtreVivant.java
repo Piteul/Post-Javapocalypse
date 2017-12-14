@@ -1,3 +1,4 @@
+package Personnage;
 
 public abstract class EtreVivant {
 
@@ -5,18 +6,30 @@ public abstract class EtreVivant {
 	private int pointVie;
 	private int status;
 	private int force;
+	private int defense;
 
-	protected EtreVivant(String p_nom, int p_pointVie, int p_status, int p_force, int p_defense) {
+	public EtreVivant(String p_nom, int p_pointVie, int p_status, int p_force, int p_defense) {
 		setNom(p_nom);
 		setPointVie(p_pointVie);
 		setStatus(p_status);
 		setForce(p_force);
+		setDefense(p_defense);
 	}
 
 	
 	/*
 	 * Getters & Setters
 	 */
+
+	public int getDefense() {
+		return defense;
+	}
+
+
+	public void setDefense(int defense) {
+		this.defense = defense;
+	}
+
 
 	public String getNom() {
 		return nom;

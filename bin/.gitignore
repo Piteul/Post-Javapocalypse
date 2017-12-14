@@ -1,10 +1,3 @@
-/Affichage.class
-/Armes.class
-/Case.class
-/EtreVivant.class
-/Humain.class
-/Main.class
-/Monstre.class
-/ObjetDivers.class
-/ObjetSoin.class
-/Personnage.class
+/Objet/
+/Personnage/
+/Refuge.class
