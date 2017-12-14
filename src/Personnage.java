@@ -1,21 +1,31 @@
 
 public class Personnage extends Humain{
-
 	
-	//CARACTERISTIQUES
-	int survie;
-	int endurance;
-	int inventaire;
+	 //CARACTERISTIQUES
 	
-	protected Personnage(String p_nom, int p_pointVie, int p_status, int p_force, int p_defense, int p_endurance, int p_survie, int p_inventaire) {
-		super(p_nom, p_pointVie, p_status, p_force, p_defense);
-		this.endurance=p_endurance;
-		this.survie=p_survie;
-		this.inventaire=p_inventaire;
+	static String nom = "Stalker";
+	static int vie = 100;
+	static int status = 0;
+	static int force = 15;
+	static int defense = 20;
+	double survie = 1.2; //à changer  
+	int endurance = 100;
+	int inventaire = 5; //à revoir
+	
+	/**
+	 * Constructeur
+	 */
+	protected Personnage() {
+		super(nom, vie, status, force, defense);
+		this.endurance=this.endurance;
+		this.survie=this.survie;
+		this.inventaire=this.inventaire;
 	}
 	
 	
-	//ACTION
+	/**
+	 * Partie exploration
+	 */
 	
 	//sur la carte
 	public void seDeplacer() {
@@ -39,7 +49,11 @@ public class Personnage extends Humain{
 		
 	}
 	
-	//en combat
+	/**
+	 * Partie Combat
+	 */
+	
+	
 	public void attaquer() {
 		
 	}
