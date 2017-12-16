@@ -7,9 +7,8 @@ public class Arme extends Objet {
 
 	
 	public Arme(String nom) {
-		super(nom, 1);
+		super(nom, 1);			//nom et qté = 1		
 		attribution(nom);
-		
 	}
 	
 	public void attribution(String nom) {

@@ -2,11 +2,11 @@ package Personnage;
 
 public abstract class EtreVivant {
 
-	private String nom;
-	private int pointVie;
-	private int status;
-	private int force;
-	private int defense;
+	protected String nom;
+	protected int pointVie;
+	protected int status;
+	protected int force;
+	protected int defense;
 
 	public EtreVivant(String p_nom, int p_pointVie, int p_status, int p_force, int p_defense) {
 		setNom(p_nom);
@@ -15,11 +15,6 @@ public abstract class EtreVivant {
 		setForce(p_force);
 		setDefense(p_defense);
 	}
-
-	
-	/*
-	 * Getters & Setters
-	 */
 
 	public int getDefense() {
 		return defense;
