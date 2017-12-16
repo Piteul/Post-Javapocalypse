@@ -10,10 +10,11 @@ public class Personnage extends Humain {
 	// CARACTERISTIQUES
 
 	static String nom = "Stalker";
-	static int pointVie = 100;
-	static int status = 0;
+	static String status = "Allié";
+	
 	static int force = 15;
 	static int defense = 20;
+	String posture = "Offensif";
 	double survie = 1.2; // à changer
 	int endurance = 100;
 	Objet inventaire[] = new Objet[10];
@@ -23,8 +24,8 @@ public class Personnage extends Humain {
 	 * Constructeur
 	 */
 
-	public Personnage() {
-		super(nom, pointVie, status, force, defense);
+	public Personnage(int p_pointVie) {
+		super(nom, p_pointVie, status, force, defense);
 	}
 
 	/**
@@ -64,25 +65,42 @@ public class Personnage extends Humain {
 	 * Partie Combat
 	 */
 
+	public boolean estVivant() {
+		return super.estVivant();
+	}
+	//exemple de polymorphisme
+	public void afficherEtat() {
+		super.afficherEtat();
+		System.out.println("Force : " + force);
+		System.out.println("Defense : " + defense);
+	}
+	
 	public void equiperArme(Arme a) {
 		this.arme = a;
 		
 	}
 	public void attaquer(Monstre adversaire) {
-		adversaire.recevoirDegat(force + p_arme.getDegat());
+		adversaire.recevoirDegat(force + arme.getDegat());
 	}
 
 	public void recevoirDegat(int degat) {
-		pointVie = pointVie - degat + defense;
-		defense = defense / 2;
+		if (posture == "Defensif") {
+			degat-=5;
+		}
+		degat -= defense;
+		if (degat < 0) {
+			degat = 0;
+		}
+		this.pointVie = pointVie - degat;
+		this.posture= "Offensif";
 	}
 
 	public void seDefendre() {
-		defense = defense * 2;
+		this.posture = "Defensif";
 	}
 
-	public void fuir() {
-
+	public boolean fuir() {
+		return Math.random() > 0.5;
 	}
 
 	/**
@@ -118,6 +136,14 @@ public class Personnage extends Humain {
 	
 	public void setArme(Arme arme) {
 		this.arme = arme;
+	}
+	
+	public String getPosture() {
+		return posture;
+	}
+	
+	public void setPosture(String posture) {
+		this.posture = posture;
 	}
 
 }
