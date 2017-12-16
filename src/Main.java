@@ -8,12 +8,10 @@ public class Main {
 	
 		System.out.println("\033[31mRed\033[32m, Green\033[33m, Yellow\033[34m, Blue\033[0m");
 		System.out.println("Hello \u001b[1;31mred\u001b[0m world!");
-<<<<<<< HEAD
 		System.out.println("\033[31mRed\033[32m, Green\033[33m, Yellow\033[34m, Blue\033[0m");
 	    System.out.println("Hello \u001b[1;31mred\u001b[0m world!");
-=======
 		System.out.println();
-		
+
 		Personnage p = new Personnage();
 		p.setPointVie(56);
 		System.out.println(p.getPointVie());
@@ -22,7 +20,6 @@ public class Main {
 		p.setPointVie(32);
 		System.out.println(p.getPointVie());
 		
->>>>>>> master
 	}
 
 }
