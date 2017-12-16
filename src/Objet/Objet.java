@@ -8,6 +8,7 @@ public abstract class Objet {
 		setNom(nom);
 		setQuantite(quantite);
 	}
+	
 
 	/*
 	 * Getters & Setters
@@ -28,5 +29,9 @@ public abstract class Objet {
 
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
+	}
+	
+	public String toString() {
+		return this.getNom()+", Quantité : "+this.getQuantite();
 	}
 }
