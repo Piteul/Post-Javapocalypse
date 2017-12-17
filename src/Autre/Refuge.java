@@ -1,8 +1,16 @@
+package Autre;
 import java.util.Scanner;
 
 import Objet.Objet;
+import Outils.Outils;
 import Personnage.Personnage;
 
+/**
+ * Classe qui définit le refuge du joueur
+ * 
+ * @author Axel Tétart
+ *
+ */
 public class Refuge {
 	private static Scanner scan = new Scanner(System.in);
 	Objet coffre[] = new Objet[30];
@@ -21,7 +29,6 @@ public class Refuge {
 	/**
 	 * Menu d'affichage du refuge
 	 */
-
 	public void menu() {
 		int nb = outils.alea(0, 3);
 
@@ -78,40 +85,39 @@ public class Refuge {
 	// Partie Coffre
 
 	public void gestionCoffre() {
-		
+
 		int choix = scan.nextInt();
 		scan.nextLine();
 
 		do {
 			afficherCoffre();
 			menuCoffre();
-			
-			switch(choix) {
-			case 1 :
-				//ajouterCoffre();
-				break;
-			case 2 :
-				//recupererCoffre();
-				break;
-		
-			case 3 :
-				//detruireCoffre();
-				break;
-			default :
-				System.out.println("Cette action n'existe pas");
-			}		
 
-		}while(choix != 4);
+			switch (choix) {
+			case 1:
+				// ajouterCoffre();
+				break;
+			case 2:
+				// recupererCoffre();
+				break;
+
+			case 3:
+				// detruireCoffre();
+				break;
+			default:
+				System.out.println("Cette action n'existe pas");
+			}
+
+		} while (choix != 4);
 	}
 
 	public void menuCoffre() {
-		System.out.println("Que souhaitez-vous faire ?"
-				+ "\n1 - Ajouter un élément au coffre"
-				+ "\n2 - Récupérer un élément du coffre"
-				+ "\n3 - Détruire un élément du coffre"
+		System.out.println("Que souhaitez-vous faire ?" + "\n1 - Ajouter un élément au coffre"
+				+ "\n2 - Récupérer un élément du coffre" + "\n3 - Détruire un élément du coffre"
 				+ "\n4 - Refermer le coffre");
-		
+
 	}
+
 	public void afficherCoffre() {
 		int nb = 1;
 		System.out.println("Contenu du coffre :");

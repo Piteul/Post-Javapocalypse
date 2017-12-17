@@ -3,8 +3,12 @@ package Personnage;
 import Objet.Arme;
 import Objet.Objet;
 import Objet.ObjetVital;
-import Objet.ObjetDivers;
 
+/**
+ * Classe de l'entité personnage, qu'incarne le joueur
+ * @author Axel Tétart
+ *
+ */
 public class Personnage extends Humain {
 
 	// CARACTERISTIQUES
@@ -16,7 +20,7 @@ public class Personnage extends Humain {
 	static int defense = 20;
 	String posture = "Offensif";
 	double survie = 1.2; // à changer
-	int endurance = 100;
+	int endurance = 50;
 	Objet inventaire[] = new Objet[10];
 	Arme arme = new Arme("Couteau");
 

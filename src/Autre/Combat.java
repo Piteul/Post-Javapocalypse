@@ -1,11 +1,24 @@
+package Autre;
 
 import Personnage.Personnage;
 import Personnage.Monstre;
 import java.lang.Math;
 import java.util.Scanner;
-import java.io.*;
+
+/**
+ * Classe qui gére le combat
+ * @author Axel Tétart
+ *
+ */
 public class Combat {		
 		
+	private Scanner sc;
+
+	/**
+	 * Constructeur
+	 * @param perso
+	 * @param monstre
+	 */
 	public Combat(Personnage perso, Monstre monstre) {
 		int enCombat=1;
 		int action;
@@ -41,7 +54,7 @@ public class Combat {
 					System.out.println("2 - Se defendre");
 					System.out.println("3 - Fuir");
 					
-					Scanner sc = new Scanner(System.in);
+					sc = new Scanner(System.in);
 					action = sc.nextInt();
 					switch (action) {
 					case 1:

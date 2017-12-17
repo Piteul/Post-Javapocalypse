@@ -1,14 +1,30 @@
 package Objet;
+
+/**
+ * Classe qui définit les objets vitaux
+ * @author Axel Tétart
+ *
+ */
 public class ObjetVital extends Objet {
 	private int pv_rendu;
 	private int endurance_rendue;
 	private String type;
 
+	
+	/**
+	 * Constructeur
+	 * @param nom
+	 * @param quantite
+	 */
 	public ObjetVital(String nom, int quantite) {
 		super(nom, quantite);
 		attribution(nom);
 	}
 
+	/**
+	 * Détermine les caractéristiques des objets
+	 * @param nom
+	 */
 	public void attribution(String nom) {
 
 		switch (nom) {

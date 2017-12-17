@@ -1,8 +1,19 @@
 package Objet;
 
+/**
+ * Classe qui définit les objets
+ * @author Axel Tétart
+ *
+ */
 public abstract class Objet {
 	private String nom;
 	private int quantite;
+	
+	/**
+	 * Constructeur
+	 * @param nom
+	 * @param quantite
+	 */
 	
 	public Objet (String nom, int quantite) {
 		setNom(nom);

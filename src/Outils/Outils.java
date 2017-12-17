@@ -1,8 +1,17 @@
+package Outils;
 import java.util.Random;
-
+/**
+ * Classe qui fait office de boite à outils
+ * @author Axel Tétart
+ *
+ */
 public class Outils {
 
 	Random r = new Random();
+	
+	/**
+	 * Constructeur
+	 */
 
 	public Outils() {
 

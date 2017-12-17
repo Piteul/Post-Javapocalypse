@@ -1,5 +1,9 @@
 package Personnage;
 
+/**
+ * Classe qui définit l'entité Etre Vivant
+ *
+ */
 public abstract class EtreVivant {
 
 	protected String nom;
@@ -8,6 +12,13 @@ public abstract class EtreVivant {
 	protected int force;
 	protected int defense;
 
+	/**
+	 * Constructeur
+	 * @param p_nom
+	 */
+	public EtreVivant(String p_nom) {
+		setNom(p_nom);
+	}
 	public EtreVivant(String p_nom, int p_pointVie, String p_status, int p_force, int p_defense) {
 		setNom(p_nom);
 		setPointVie(p_pointVie);
@@ -16,7 +27,10 @@ public abstract class EtreVivant {
 		setDefense(p_defense);
 	}
 	
-	
+	/**
+	 * Permet de savoir si vivant ou non
+	 * @return
+	 */
 	public boolean estVivant() {
 		if (pointVie > 0) {
 			return true;
@@ -25,12 +39,19 @@ public abstract class EtreVivant {
 		}
 	}
 	
+	/**
+	 * Affiche le Nom et les Points de Vie
+	 */
 	public void afficherEtat() {
 		System.out.println("--------------------");
 		System.out.println("Nom : " + nom);
 		System.out.println("Santé : " + pointVie + " PV");
 	}
 	
+	/**
+	 * Getters et Setters
+	 * @return
+	 */
 
 	public int getDefense() {
 		return defense;

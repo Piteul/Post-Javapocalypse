@@ -1,16 +1,30 @@
 package Objet;
+
+/**
+ * Classe qui définit les objets : armes
+ * @author Axel Tétart
+ *
+ */
 public class Arme extends Objet {
 
 	private String nom;
 	private int degat;
 	private String type;
 
+	/**
+	 * Constructeur
+	 * @param nom
+	 */
 	
 	public Arme(String nom) {
-		super(nom, 1);			//nom et qté = 1		
+		super(nom, 1);	//quantité toujours de valeur 1		
 		attribution(nom);
 	}
 	
+	/**
+	 * Détermine les caractéristiques de l'arme d'après son nom
+	 * @param nom
+	 */
 	public void attribution(String nom) {
 		switch (nom) {
 		
