@@ -2,7 +2,7 @@ package Personnage;
 
 /**
  * Classe qui définit l'entité Etre Vivant
- *
+ * On instancie jamais un etre vivant
  */
 public abstract class EtreVivant {
 

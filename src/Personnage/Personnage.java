@@ -17,9 +17,9 @@ public class Personnage extends Humain {
 	static String status = "Allié";
 	
 	static int force = 15;
-	static int defense = 20;
+	static int defense = 10;
 	String posture = "Offensif";
-	double survie = 1.2; // à changer
+	double survie = 1.2;
 	int endurance = 50;
 	Objet inventaire[] = new Objet[10];
 	Arme arme = new Arme("Couteau");
@@ -65,28 +65,52 @@ public class Personnage extends Humain {
 
 	}
 
+	
+	
 	/**
 	 * Partie Combat
 	 */
 
+	/**
+	 * Permet de savoir si le personnage est en vie
+	 */
+	
 	public boolean estVivant() {
 		return super.estVivant();
 	}
-	//exemple de polymorphisme
+	
+	/**
+	 * Affiche l'état du personnage
+	 */
+	
 	public void afficherEtat() {
 		super.afficherEtat();
 		System.out.println("Force : " + force);
 		System.out.println("Defense : " + defense);
 	}
 	
+	/**
+	 * Le personnage s'équipe d'une arme
+	 */
+	
 	public void equiperArme(Arme a) {
-		this.arme = a;
-		
+		this.arme = a;	
 	}
+	
+	/**
+	 * Le personnage attaque un adversaire
+	 */
+	
 	public void attaquer(Monstre adversaire) {
+		System.out.println("Vous attaquez !");
 		adversaire.recevoirDegat(force + arme.getDegat());
 	}
 
+	/**
+	 * Reçoit les dégats de l'adversaire
+	 * Prend en compte la posture et la défense du personnage puis l'attaque du monstre.
+	 */
+	
 	public void recevoirDegat(int degat) {
 		if (posture == "Defensif") {
 			degat-=5;
@@ -97,16 +121,28 @@ public class Personnage extends Humain {
 		}
 		this.pointVie = pointVie - degat;
 		this.posture= "Offensif";
+		System.out.println(this.getNom() + " a reçu " + degat + " point(s) de degat !");
 	}
-
+	
+	/**
+	 * Permet au personnage de se mettre en posture défensive
+	 * Ce qui aura pour effet de reduire considérablement les degats !
+	 */
+	
 	public void seDefendre() {
 		this.posture = "Defensif";
 	}
-
+	
+	/**
+	 * Permet de faire un jet de fuite avec un bonus issue de sa capacité 'Survie'
+	 * retourne Vrai ou Faux
+	 */
 	public boolean fuir() {
-		return Math.random() > 0.5;
+		return Math.random()*this.survie > 0.5;
 	}
 
+	
+	
 	/**
 	 * Getters et Setters
 	 */

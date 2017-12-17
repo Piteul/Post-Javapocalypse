@@ -17,13 +17,16 @@ public class Monstre extends EtreVivant {
 	 * @param p_force
 	 * @param p_defense
 	 */
-
+	
+	//variable qui definit si le monstre est en mode berserk
+	int berserk;
 	public Monstre(String p_nom) {
 		super(p_nom);
+		attribution(p_nom);
 	}
 
 	/**
-	 * Permet d'attribuer les caractéristiques du monstre d'après son nom
+	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
 	 * 
 	 * @param nom
 	 */
@@ -32,14 +35,30 @@ public class Monstre extends EtreVivant {
 		case "Colosse":
 			setPointVie(50);
 			setStatus("Ennemi");
-			setForce(10);
-			setDefense(20);
+			setForce(15);
+			setDefense(10);
+			setBerserk(0);
 			break;
 		case "Goule":
-
+			setPointVie(25);
+			setStatus("Ennemi");
+			setForce(10);
+			setDefense(5);
+			setBerserk(0);
 			break;
 		case "Carnigore":
-
+			setPointVie(40);
+			setStatus("Ennemi");
+			setForce(25);
+			setDefense(5);
+			setBerserk(0);
+			break;
+		case "Sbire":
+			setPointVie(70);
+			setStatus("Ennemi");
+			setForce(0);
+			setDefense(0);
+			setBerserk(0);
 			break;
 
 		default:
@@ -55,6 +74,7 @@ public class Monstre extends EtreVivant {
 	 * @param adversaire
 	 */
 	public void attaquer(Personnage adversaire) {
+		System.out.println(this.getNom()+" attaque !");
 		adversaire.recevoirDegat(force);
 	}
 
@@ -64,6 +84,7 @@ public class Monstre extends EtreVivant {
 	public void berserkMod() {
 		this.force += 5;
 		this.defense += 5;
+		System.out.println("Attention, le monstre gagne en puissance !");
 	}
 
 	/**
@@ -77,6 +98,11 @@ public class Monstre extends EtreVivant {
 			degat = 0;
 		}
 		this.pointVie = pointVie - degat;
+		if (degat==0) {
+			System.out.println("Vous ne lui faite aucun degat. Il serait plus sage de fuir...");
+		}else {
+			System.out.println(this.getNom() + " a reçu " + degat + " point(s) de degat !");
+		}
 	}
 
 	/**
@@ -94,4 +120,19 @@ public class Monstre extends EtreVivant {
 		System.out.println("Status : " + status);
 		System.out.println("--------------------");
 	}
+	
+	
+	/**
+	 * Getters et Setters
+	 * @return
+	 */
+	
+	public int getBerserk() {
+		return berserk;
+	}
+
+	public void setBerserk(int berserk) {
+		this.berserk = berserk;
+	}
+	
 }

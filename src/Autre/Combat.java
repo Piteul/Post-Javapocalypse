@@ -18,15 +18,20 @@ public class Combat {
 	 * Constructeur
 	 * @param perso
 	 * @param monstre
+	 * La classe combat permet d'opposer notre personnage à divers monstres.
+	 * Ce combat s'enclanche aléatoirement durant une exploration.
+	 * Le systeme de combat est au tour par tour.
+	 * 
 	 */
 	public Combat(Personnage perso, Monstre monstre) {
+		//variable qui permet de savoir si on est en combat ou non
 		int enCombat=1;
+		//un entier qui stockera les actions de l'utilisateur
 		int action;
-		int berserk = 0;
 		System.out.println("Début du combat !");
-		while (enCombat !=0) {
-			
-			
+		System.out.println("Vous avez rencontré un(e) " + monstre.getNom());
+		//tant que le combat est en cours
+		while (enCombat !=0) {			
 			//genere un nombre entre 0 et 1 pour determiner qui commence en premier
 			//si tour = 1 c'est le tour du personnage 
 			//si tour = 0 c'est le tour du monstre
@@ -37,15 +42,19 @@ public class Combat {
 				System.out.println(monstre.getNom() + " a l'initiative");
 			}
 			
-			
+			//affichage de l'etat des entités qui se battent avant le debut du combat
 			perso.afficherEtat();
 			monstre.afficherEtat();
 			
 			//tant que les entités qui combattent sont vivante, le combat continue
 			while (enCombat == 1 && (perso.estVivant() && monstre.estVivant())) {
+				System.out.println("\n");
 				System.out.println("==========");
 				System.out.println("=Tour : " + tour);
 				System.out.println("==========");
+				if (perso.getPointVie()<30) {
+					System.out.println("Votre personnage est dans un sal etat !");
+				}
 				if (tour%2 == 1) {
 					perso.afficherEtat();
 					System.out.println("------------------------------");
@@ -78,16 +87,20 @@ public class Combat {
 				}else if (tour%2 == 0){
 					//tour du monstre
 					monstre.afficherEtat();
+					if (monstre.getBerserk() == 0 && monstre.getPointVie() <= 30) {
+						monstre.berserkMod();
+						monstre.setBerserk(1);
+					}
 					monstre.attaquer(perso);
 					tour++;
-					if (berserk == 0 && monstre.getPointVie() <= 30) {
-						System.out.println("Attention, le monstre gagne en puissance !");
-						monstre.berserkMod();
-						berserk = 1;
-					}
 				}
 			}
 			enCombat = 0;
+			if (monstre.getPointVie() <= 0) {
+				System.out.println("Vous avez térassé " + monstre.getNom());
+			}else {
+				System.out.println("WASTED !");
+			}
 			System.out.println("Fin du combat !");
 			
 		}
