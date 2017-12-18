@@ -13,6 +13,7 @@ import Objet.ObjetVital;
  */
 public class Personnage extends Humain {
 
+	private Scanner sc;
 	// CARACTERISTIQUES
 
 	static String nom = "Stalker";
@@ -25,7 +26,9 @@ public class Personnage extends Humain {
 	int endurance = 50;
 	Objet inventaire[] = new Objet[10];
 	Arme arme = new Arme("Couteau");
-	private Scanner sc;
+	private int posX, posY; //position du joueur dans la grille;
+	
+
 	/**
 	 * Constructeur
 	 */
@@ -251,6 +254,22 @@ public class Personnage extends Humain {
 	/**
 	 * Getters et Setters
 	 */
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+
 	public double getSurvie() {
 		return survie;
 	}

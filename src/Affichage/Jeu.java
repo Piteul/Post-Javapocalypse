@@ -5,29 +5,42 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
-public class Affichage {
+import Autre.Combat;
+import Autre.Refuge;
+import Outils.Outils;
+import Personnage.Personnage;
+
+/**
+ * Classe qui gère le fonctionnement global du jeu et son affichage
+ * 
+ * @author Axel Tétart
+ *
+ */
+public class Jeu {
 
 	private int dimX;
 	private int dimY;
 	private Case grille[][];
+	private Scanner scan = new Scanner(System.in);
+	private boolean dansRefuge = true;
+	Personnage perso = new Personnage(100);
+	Refuge refuge = new Refuge(perso);
+	Combat c;
 
-	public Affichage() {
+	/**
+	 * Constructeur
+	 */
+	public Jeu() {
 
 		try {
 			lectureFichier();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		afficheGrille();
-		
-		if(grille[0][0].getObjet() == null) {
-			System.out.println("Pas d'objet");
-		}else {
-			System.out.println(grille[0][0].getObjet().getNom());
-		}
-
+		refuge.affichePosition();
+		menu();
 	}
 
 	/**
@@ -60,6 +73,11 @@ public class Affichage {
 
 					for (j = 0; j < dimY; j++) {
 						grille[i][j] = new Case(tab[j]);
+
+						if (grille[i][j].getSymbole() == '@') { // on récupère la position du refuge
+							refuge.setPosX(i);
+							refuge.setPosY(j);
+						}
 					}
 					i++;
 				}
@@ -72,7 +90,6 @@ public class Affichage {
 		}
 
 	}
-	
 
 	/**
 	 * Initialise la grille
@@ -94,15 +111,74 @@ public class Affichage {
 
 	}
 
+	/**
+	 * Affiche la grille du jeu
+	 */
 	public void afficheGrille() {
 		int i, j;
-		System.out.println("Grille : ");
+		System.out.println("\nCarte des Terres Dévastées : ");
 		for (i = 0; i < dimX; i++) {
 			System.out.println();
 			for (j = 0; j < dimY; j++) {
 				System.out.print(grille[i][j].getSymbole());
 			}
 		}
+	}
+
+	/**
+	 * Affiche le menu de commande
+	 */
+	public void afficheMenu() {
+		System.out.println("Que souhaitez-vous faire :");
+		System.out.println("\nDéplacement" + "\n Haut -> z" + "\n Bas -> s" + "\n Gauche -> q" + "\n Droite -> d");
+		System.out.println("1. Fouiller la zone");
+		System.out.println("2. Inventaire");
+
+		int nb = Outils.alea(0, 3);
+		switch (nb) {
+		case 0:
+			System.out.println("3. Mettre la table pour les asticots");
+			break;
+		case 1:
+			System.out.println("3. Exhaler son âme");
+			break;
+		case 2:
+			System.out.println("3. Aérer ses tripes");
+			break;
+
+		}
+	}
+
+	/**
+	 * Gère l'affichage principal du jeu
+	 */
+	public void menu() {
+		String choix;
+		do {
+			afficheGrille();
+			System.out.println();
+			System.out.println();
+			afficheMenu();
+			System.out.print("\nChoix : ");
+			choix = scan.next();
+			scan.nextLine();
+			System.out.println();
+			switch (choix) {
+			case "z":
+				System.out.println("Haut");
+				break;
+			case "1":
+				break;
+			case "2":
+				System.out.println(choix);
+				break;
+			case "3":
+				System.exit(0);
+				break;
+
+			}
+		} while (choix != "3");
+
 	}
 
 	/**

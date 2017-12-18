@@ -1,4 +1,5 @@
 package Autre;
+
 import java.util.Scanner;
 
 import Objet.Objet;
@@ -15,7 +16,8 @@ public class Refuge {
 	private static Scanner scan = new Scanner(System.in);
 	Objet coffre[] = new Objet[30];
 	Personnage p;
-	Outils outils;
+	Outils outils = new Outils();
+	private int posX, posY;
 
 	/**
 	 * Constructeur
@@ -126,8 +128,28 @@ public class Refuge {
 		}
 	}
 
+	public void affichePosition() {
+		System.out.println("Pos x : " + getPosX() + ", " + "Pos y : " + getPosY());
+	}
+
 	/**
 	 * Getters et Setters
 	 */
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
 
 }

@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class Outils {
 
-	Random r = new Random();
+	static Random r = new Random();
 	
 	/**
 	 * Constructeur
@@ -23,9 +23,9 @@ public class Outils {
 	 * @param max
 	 * @return
 	 */ 
-	public int alea(int min, int max) {
-		int low = 10;
-		int high = 100;
+	public static int alea(int min, int max) {
+		int low = min;
+		int high = max;
 		int result = r.nextInt(high - low) + low;
 		return result;
 	}

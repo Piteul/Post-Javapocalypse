@@ -57,14 +57,14 @@ public class Case {
 
 		case '*': // zone hostile
 			setDescription("Zone hostile");
-			nb = 2;
+			nb = Outils.alea(0, 3);
 			if (nb == 2) { // 1 chance sur 3 de trouver un objet
 				nb = outils.alea(0, objetZoneHostile.length);
 				setObjet(objetZoneHostile[nb]);
 			}
 
 			break;
-		case '#':
+		case '#': // zone sécurisé
 			nb = outils.alea(0, 5);
 			setDescription("Zone sécurisé");
 			if (nb == 2) { // 1 chance sur 5 de trouver un objet
