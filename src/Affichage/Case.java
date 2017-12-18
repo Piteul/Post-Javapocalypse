@@ -14,7 +14,7 @@ import Outils.Outils;
  */
 public class Case {
 
-	Outils outils;
+	Outils outils = new Outils();
 	private char symbole;
 	private String description;
 	private Objet objet;
@@ -57,7 +57,7 @@ public class Case {
 
 		case '*': // zone hostile
 			setDescription("Zone hostile");
-			nb = Outils.alea(0, 3);
+			nb = outils.alea(0, 3);
 			if (nb == 2) { // 1 chance sur 3 de trouver un objet
 				nb = outils.alea(0, objetZoneHostile.length);
 				setObjet(objetZoneHostile[nb]);

@@ -25,6 +25,7 @@ public class Jeu {
 	private Case grille[][];
 	private Scanner scan = new Scanner(System.in);
 	private boolean dansRefuge = true;
+	Outils outils = new Outils();
 	Personnage perso = new Personnage(100);
 	Refuge refuge = new Refuge(perso);
 	Combat c;
@@ -134,7 +135,7 @@ public class Jeu {
 		System.out.println("1. Fouiller la zone");
 		System.out.println("2. Inventaire");
 
-		int nb = Outils.alea(0, 3);
+		int nb = outils.alea(0, 3);
 		switch (nb) {
 		case 0:
 			System.out.println("3. Mettre la table pour les asticots");

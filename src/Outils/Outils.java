@@ -23,7 +23,7 @@ public class Outils {
 	 * @param max
 	 * @return
 	 */ 
-	public static int alea(int min, int max) {
+	public int alea(int min, int max) {
 		int low = min;
 		int high = max;
 		int result = r.nextInt(high - low) + low;
