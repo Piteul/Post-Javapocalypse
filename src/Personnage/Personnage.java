@@ -49,18 +49,53 @@ public class Personnage extends Humain {
 	
 	//visualisation de l'inventaire
 	public void voirInventaire() {
-		System.out.println("Contenu de l'inventaire");
+		System.out.println("============================");
+		System.out.println("= Contenu de l'inventaire : ");
 		for (int i =0; i < inventaire.length; i++) {
 			if (inventaire[i] != null) {
-				System.out.println(i + " - " + inventaire[i]);
+				System.out.println("= " + i + " - " + inventaire[i]);
 			}
 		}
+		System.out.println("============================\n");
 	}
+	
+	//renvoie le nombre d'emplacement utilisé dans l'inventaire
+	public int poidsInventaire() {
+		int compteur=0;
+		for (int i = 0; i < inventaire.length; i++) {
+			if (inventaire[i] != null) {
+				compteur++;
+			}
+		}
+		return compteur;
+	}
+	
 	//fonction d'ajout d'un objet dans l'inventaire
 	public void ajouterInventaire(Objet o) {
-		int i = placeLibre();
-		if (i != -1) {
-			inventaire[i] = o;
+		int deja_ajoute=0;
+		if (poidsInventaire() != inventaire.length) {
+			for (int i = 0; i < poidsInventaire(); i++) {
+				if (inventaire[i].getNom() == o.getNom()) {
+					int a = o.getQuantite();
+					inventaire[i] = o;
+					inventaire[i].setQuantite(inventaire[i].getQuantite() + a);
+					deja_ajoute = 1;
+					System.out.println(o.getQuantite() + " " + o.getNom() + " ajouté(e)(s) à l'inventaire");
+				}
+			}
+			if (deja_ajoute != 1) {
+				int b = placeLibre();
+				if (b != -1) {
+					try {
+						inventaire[b] = o;
+						System.out.println(o.getQuantite() + " " + o.getNom() + " ajouté(e)(s) à l'inventaire");
+					}catch (Exception e){
+						System.out.println("L'inventaire est plein !");
+					}
+				}			
+			}
+		}else {
+			System.out.println("L'inventaire est plein !!");
 		}
 	}
 	
@@ -68,14 +103,17 @@ public class Personnage extends Humain {
 	public void jeterObjet() {
 		int action;
 		int nombre;
-		System.out.println("Quel objet voulez vous jetez ?");
+		voirInventaire();
+		System.out.println("Selectionnez l'objet que voulez jeter ?");
 		sc = new Scanner(System.in);
 		action = sc.nextInt();
-		//si la quantité de l'objet qu'on veut supprimé est incorrect on redemande
+
+		//si l'indice de l'objet qu'on veut supprimé est incorrect
 		if (action < 0 || action > inventaire.length) {
-			System.out.println("Emplacement inaccesible de l'inventaire");
-			jeterObjet();
+			System.out.println("Emplacement qui ne correspond pas à une place de l'inventaire");
 		//s'il existe un objet avec un quantité supérieur à 1, on demande, combien d'objet retirer
+		}else if (inventaire[action] == null){
+			System.out.println("C'est un emplacement libre !");
 		}else if(inventaire[action].getQuantite() > 1){
 			System.out.println("Combien voulez vous en retirer ?");
 			nombre = sc.nextInt();
@@ -86,29 +124,34 @@ public class Personnage extends Humain {
 			}
 			inventaire[action].setQuantite(inventaire[action].getQuantite() - nombre);
 			if (inventaire[action].getQuantite()==0) {
-				System.out.println(inventaire[action] + " a été retiré !");
+				System.out.println(inventaire[action].getNom() + " a été retiré !");
 				inventaire[action]=null;
-			}
-		//si l'objet n'existe qu'en un seul exemplaire, on le supprime simplement
-		}else{
-			System.out.println(inventaire[action] + " a été retiré !");
-			inventaire[action]=null;
-			
+				reorganise(action);
 		}
+		//si l'objet n'existe qu'en un seul exemplaire, on le supprime simplement
+		}else {
+			System.out.println(inventaire[action].getNom() + " a été retiré !");
+			inventaire[action]=null;
+			reorganise(action);			
+		}
+		voirInventaire();
+	}
+	
+	
+	public void reorganise(int a) {
+		for (int i=a; i< inventaire.length-1; i++) {
+			inventaire[a]= inventaire[a+1];
+		}
+		inventaire[inventaire.length-1]=null;
 	}
 	
 	//renvoie l'indice d'une place libre dans l'inventaire
 	public int placeLibre() {
 		int i = 0;
-		int indice = -1;
 		while (inventaire[i] != null && i < inventaire.length) {
 			i++;
 		}
-		indice = i;
-		if (indice == -1) {
-			System.out.println("L'inventaire est plein !");
-		}
-		return indice;
+		return i;
 	}
 
 
