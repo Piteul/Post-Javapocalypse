@@ -10,7 +10,7 @@ public class Affichage {
 
 	private int dimX;
 	private int dimY;
-	private char grille[][];
+	private Case grille[][];
 
 	public Affichage() {
 
@@ -21,6 +21,12 @@ public class Affichage {
 			e.printStackTrace();
 		}
 		afficheGrille();
+		
+		if(grille[0][0].getObjet() == null) {
+			System.out.println("Pas d'objet");
+		}else {
+			System.out.println(grille[0][0].getObjet().getNom());
+		}
 
 	}
 
@@ -48,12 +54,12 @@ public class Affichage {
 					setDimX(Integer.parseInt(line));
 				} else if (nbligne == 1) { // deuxième ligne correspond à la dimension Y - longueur de chaque ligne
 					setDimY(Integer.parseInt(line));
-					initGrille(getDimX(), getDimY());
+					grille = new Case[dimX][dimY];
 				} else {
 					tab = line.toCharArray();
 
 					for (j = 0; j < dimY; j++) {
-						grille[i][j] = tab[j];
+						grille[i][j] = new Case(tab[j]);
 					}
 					i++;
 				}
@@ -78,11 +84,11 @@ public class Affichage {
 		int i, j;
 		dimX = nb1;
 		dimY = nb2;
-		grille = new char[dimX][dimY];
+		grille = new Case[dimX][dimY];
 
 		for (i = 0; i < dimX; i++) {
 			for (j = 0; j < dimY; j++) {
-				grille[i][j] = 'A';
+				grille[i][j] = new Case('A');
 			}
 		}
 
@@ -94,7 +100,7 @@ public class Affichage {
 		for (i = 0; i < dimX; i++) {
 			System.out.println();
 			for (j = 0; j < dimY; j++) {
-				System.out.print(grille[i][j]);
+				System.out.print(grille[i][j].getSymbole());
 			}
 		}
 	}

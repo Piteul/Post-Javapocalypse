@@ -1,4 +1,5 @@
 import Personnage.Personnage;
+import Affichage.Affichage;
 import Autre.Combat;
 
 //import Affichage.Affichage;
@@ -10,10 +11,10 @@ public class Main {
 		//initialisation du personnage
 		Personnage p = new Personnage(100);
 		//simulation de combat
-		Combat C = new Combat (p);
+		//Combat C = new Combat (p);
 		
 	
-		//Affichage aff = new Affichage();
+		Affichage aff = new Affichage();
 	}
 
 }
