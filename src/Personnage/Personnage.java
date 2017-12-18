@@ -173,9 +173,12 @@ public class Personnage extends Humain {
 		voirInventaire();
 	}
 	
+	
+	
+	
+	
 	/**
-	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
-	 * 
+	 * Réorganise l'inventaire
 	 * @param a
 	 * a est un indice a partir duquel on commence à réorganiser
 	 * si l'inventaire est remplit et qu'il y a un emplacement vide entre les emplacement utilisé
@@ -189,8 +192,7 @@ public class Personnage extends Humain {
 	}
 	
 	/**
-	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
-	 * 
+	 * Cherche une place libre dans l'inventaire
 	 * Renvoie l'indice d'une place libre dans l'inventaire
 	 */
 	public int placeLibre() {
@@ -200,7 +202,18 @@ public class Personnage extends Humain {
 		}
 		return i;
 	}
-
+	/**
+	*retourne l'indice d'un objet qu'on cherche
+	*
+	*/
+	public int chercheObjet(String nom) {
+		for (int i = 0; i < poidsInventaire(); i++) {
+			if (inventaire[i].getNom() == nom) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
 	// a specifier
 	public void utiliserObjet() {

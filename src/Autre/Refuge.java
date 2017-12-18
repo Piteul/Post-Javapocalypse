@@ -18,6 +18,7 @@ public class Refuge {
 	Personnage p;
 	Outils outils = new Outils();
 	private int posX, posY;
+	private int feu=0;
 
 	/**
 	 * Constructeur
@@ -25,7 +26,8 @@ public class Refuge {
 	public Refuge(Personnage perso) {
 		p = perso;
 		outils = new Outils();
-		seReposer();
+		//seReposer();
+		faireFeu();
 	}
 
 	/**
@@ -79,6 +81,23 @@ public class Refuge {
 		this.p.setPointVie(100);
 	}
 
+	public void faireFeu() {
+		if (feu == 1) {
+			System.out.println("Il y a deja un feu...");
+		}else {
+			for (int i =0; i < p.poidsInventaire(); i++) {
+				if (p.chercheObjet("Alumette") != -1 && p.chercheObjet("Combustible") != -1) {
+					feu = 1;
+					System.out.println("Vous avez alumé un feu");
+					p.getInventaire()[p.chercheObjet("Alumette")].setQuantite(p.getInventaire()[p.chercheObjet("Alumette")].getQuantite()-1);
+					p.getInventaire()[p.chercheObjet("Combustible")].setQuantite(p.getInventaire()[p.chercheObjet("Combustible")].getQuantite()-1);
+				}else {
+					System.out.println("Vous n'avez pas les ressources requises pour faire un feu...");
+				}
+			}
+		}
+	}
+	
 	public Personnage quitter() {
 		return p;
 	}
@@ -101,7 +120,6 @@ public class Refuge {
 			case 2:
 				// recupererCoffre();
 				break;
-
 			case 3:
 				// detruireCoffre();
 				break;
@@ -127,6 +145,8 @@ public class Refuge {
 			System.out.println("\t" + nb + ". " + obj.toString());
 		}
 	}
+	
+	
 
 	public void affichePosition() {
 		System.out.println("Pos x : " + getPosX() + ", " + "Pos y : " + getPosY());

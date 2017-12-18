@@ -9,6 +9,7 @@ package Autre;
 public class Météo {
 	private int cout_endurance;
 	private int cout_point_vie;
+	private String nom;
 
 
 	/**
@@ -55,9 +56,25 @@ public class Météo {
 		}
 	}
 	
+	public void afficherMeteo() {
+		System.out.println("Météo actuelle : " + nom);
+		System.out.println("Effet sur l'endurance : -" + getCout_endurance());
+		System.out.println("Effet sur la santé : -" + getCout_point_vie());
+	}
+	
+	
 	/*
 	 * Getters & Setters
 	 */
+	
+	public String getNom() {
+		return nom;
+	}
+
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 	
 	public int getCout_endurance() {
 		return cout_endurance;
