@@ -17,9 +17,12 @@ public class Monstre extends EtreVivant {
 	 * @param p_force
 	 * @param p_defense
 	 */
-	
 	//variable qui definit si le monstre est en mode berserk
 	int berserk;
+	//palier en dessous duquel le monstre passe en mode berserk
+	int palier;
+
+
 	public Monstre(String p_nom) {
 		super(p_nom);
 		attribution(p_nom);
@@ -33,25 +36,28 @@ public class Monstre extends EtreVivant {
 	public void attribution(String nom) {
 		switch (nom) {
 		case "Colosse":
-			setPointVie(50);
-			setStatus("Ennemi");
-			setForce(15);
-			setDefense(10);
-			setBerserk(0);
-			break;
-		case "Goule":
-			setPointVie(25);
+			setPointVie(70);
 			setStatus("Ennemi");
 			setForce(10);
 			setDefense(5);
 			setBerserk(0);
+			setPalier(0);
+			break;
+		case "Goule":
+			setPointVie(25);
+			setStatus("Ennemi");
+			setForce(5);
+			setDefense(5);
+			setBerserk(0);
+			setPalier(10);
 			break;
 		case "Carnigore":
 			setPointVie(40);
 			setStatus("Ennemi");
-			setForce(25);
+			setForce(15);
 			setDefense(5);
 			setBerserk(0);
+			setPalier(40);
 			break;
 		case "Sbire":
 			setPointVie(70);
@@ -59,6 +65,7 @@ public class Monstre extends EtreVivant {
 			setForce(0);
 			setDefense(0);
 			setBerserk(0);
+			setPalier(0);
 			break;
 
 		default:
@@ -75,7 +82,12 @@ public class Monstre extends EtreVivant {
 	 */
 	public void attaquer(Personnage adversaire) {
 		System.out.println(this.getNom()+" attaque !");
-		adversaire.recevoirDegat(force);
+		if (Math.random() <= 0.10) {
+			System.out.println("Coup critique !");
+			adversaire.recevoirDegat(force * 2);
+		}else {
+			adversaire.recevoirDegat(force);
+		};
 	}
 
 	/**
@@ -133,6 +145,14 @@ public class Monstre extends EtreVivant {
 
 	public void setBerserk(int berserk) {
 		this.berserk = berserk;
+	}
+	
+	public int getPalier() {
+		return palier;
+	}
+
+	public void setPalier(int palier) {
+		this.palier = palier;
 	}
 	
 }

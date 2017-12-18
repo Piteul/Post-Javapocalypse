@@ -23,7 +23,30 @@ public class Combat {
 	 * Le systeme de combat est au tour par tour.
 	 * 
 	 */
-	public Combat(Personnage perso, Monstre monstre) {
+	public Combat(Personnage perso) {
+		//partie génération du monstre de manière aléatoire
+		Monstre monstre = null;
+		//genere un nombre entre 0 et 1. Je multiplie par 10 pour gerer le taux d'apparition des monstres
+		int rencontre = (int)(Math.random() * 10);
+		switch (rencontre) {
+		case 1: case 2: case 3:			//30% de chance d'apparaitre
+			monstre = new Monstre("Colosse");
+			break;
+		case 4: case 5: case 6: case 7: //40% de chance d'apparaitre
+			monstre = new Monstre("Goule");
+			break;
+		case 8: case 9:					//20% de chance d'apparaitre
+			monstre = new Monstre("Carnigore");
+			break;
+		case 0:						//10% de chance d'apparaitre
+			monstre = new Monstre("Sbire");
+			break;
+
+		default:
+			System.out.println("Monstre inexistant");
+		}
+		
+		
 		//variable qui permet de savoir si on est en combat ou non
 		int enCombat=1;
 		//un entier qui stockera les actions de l'utilisateur
@@ -55,8 +78,10 @@ public class Combat {
 				if (perso.getPointVie()<30) {
 					System.out.println("Votre personnage est dans un sal etat !");
 				}
+				//tour du joueur
 				if (tour%2 == 1) {
 					perso.afficherEtat();
+					//phase de choix de l'action par le joueur
 					System.out.println("------------------------------");
 					System.out.println("Choisissez une action !");
 					System.out.println("1 - Attaquer");
@@ -84,10 +109,11 @@ public class Combat {
 							break;
 						}
 					}
+					
+				//tour du monstre
 				}else if (tour%2 == 0){
-					//tour du monstre
 					monstre.afficherEtat();
-					if (monstre.getBerserk() == 0 && monstre.getPointVie() <= 30) {
+					if (monstre.getBerserk() == 0 && monstre.getPointVie() <= monstre.getPalier()) {
 						monstre.berserkMod();
 						monstre.setBerserk(1);
 					}

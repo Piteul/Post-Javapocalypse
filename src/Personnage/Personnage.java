@@ -17,7 +17,7 @@ public class Personnage extends Humain {
 	static String status = "Allié";
 	
 	static int force = 15;
-	static int defense = 10;
+	static int defense = 5;
 	String posture = "Offensif";
 	double survie = 1.2;
 	int endurance = 50;
@@ -103,7 +103,12 @@ public class Personnage extends Humain {
 	
 	public void attaquer(Monstre adversaire) {
 		System.out.println("Vous attaquez !");
-		adversaire.recevoirDegat(force + arme.getDegat());
+		if (Math.random()*this.survie <=0.5) {
+			System.out.println("Coup critique !");
+			adversaire.recevoirDegat((force + arme.getDegat()) * 2);
+		}else {
+			adversaire.recevoirDegat(force + arme.getDegat());
+		}
 	}
 
 	/**
