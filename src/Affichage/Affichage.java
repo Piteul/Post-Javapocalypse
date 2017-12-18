@@ -1,4 +1,5 @@
 package Affichage;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,10 +25,12 @@ public class Affichage {
 	}
 
 	/**
-	 * Permet de lire le fichier carte.txt et générer la carte qui sera définit dedans
-	 * La première ligne correspond au nombre de ligne qu'aura la grille (hauteur)
-	 * La deuxième ligne correspond à la longueur de chaque ligne (longueur)
-	 * Le reste est la composition de la grille et qui doit respecter les dimensions données.
+	 * Permet de lire le fichier carte.txt et générer la carte qui sera définit
+	 * dedans La première ligne correspond au nombre de ligne qu'aura la grille
+	 * (hauteur) La deuxième ligne correspond à la longueur de chaque ligne
+	 * (longueur) Le reste est la composition de la grille et qui doit respecter les
+	 * dimensions données.
+	 * 
 	 * @throws IOException
 	 */
 	public void lectureFichier() throws IOException {
@@ -36,22 +39,20 @@ public class Affichage {
 		char[] tab;
 		File file = new File("carte.txt");
 		BufferedReader br;
-		
+
 		try {
 			br = new BufferedReader(new FileReader(file));
 			String line;
 			while ((line = br.readLine()) != null) {
-				if(nbligne == 0) {	// première ligne correspond à la dimension X - nb de ligne de la grille
+				if (nbligne == 0) { // première ligne correspond à la dimension X - nb de ligne de la grille
 					setDimX(Integer.parseInt(line));
-				}
-				else if(nbligne == 1) {	//deuxième ligne correspond à la dimension Y - longueur de chaque ligne				
+				} else if (nbligne == 1) { // deuxième ligne correspond à la dimension Y - longueur de chaque ligne
 					setDimY(Integer.parseInt(line));
 					initGrille(getDimX(), getDimY());
-				}
-				else {
+				} else {
 					tab = line.toCharArray();
-					
-					for(j=0; j < dimY; j++) {
+
+					for (j = 0; j < dimY; j++) {
 						grille[i][j] = tab[j];
 					}
 					i++;
@@ -65,9 +66,11 @@ public class Affichage {
 		}
 
 	}
+	
 
 	/**
 	 * Initialise la grille
+	 * 
 	 * @param nb1
 	 * @param nb2
 	 */

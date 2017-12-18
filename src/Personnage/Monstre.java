@@ -67,7 +67,6 @@ public class Monstre extends EtreVivant {
 			setBerserk(0);
 			setPalier(0);
 			break;
-
 		default:
 			System.out.println("Monstre inexistant");
 		}

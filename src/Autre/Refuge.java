@@ -66,7 +66,6 @@ public class Refuge {
 			break;
 		default:
 			System.out.println("Vous procrastinez, comme l'a fait l'humanité toute entière pour en arriver là");
-
 		}
 
 	}

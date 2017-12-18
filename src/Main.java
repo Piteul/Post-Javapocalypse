@@ -1,7 +1,5 @@
 import Personnage.Personnage;
-import Personnage.Monstre;
 import Autre.Combat;
-import java.lang.Math;
 
 //import Affichage.Affichage;
 
