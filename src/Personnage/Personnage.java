@@ -25,6 +25,9 @@ public class Personnage extends Humain {
 	double survie = 1.2;
 	int endurance = 50;
 	Objet inventaire[] = new Objet[10];
+	int capacite_par_emplacement=99;
+
+
 	Arme arme = new Arme("Couteau");
 	private int posX, posY; //position du joueur dans la grille;
 	
@@ -50,7 +53,11 @@ public class Personnage extends Humain {
 
 	}
 	
-	//visualisation de l'inventaire
+	/**
+	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
+	 * 
+	 * visualisation de l'inventaire
+	 */
 	public void voirInventaire() {
 		System.out.println("============================");
 		System.out.println("= Contenu de l'inventaire : ");
@@ -62,7 +69,11 @@ public class Personnage extends Humain {
 		System.out.println("============================\n");
 	}
 	
-	//renvoie le nombre d'emplacement utilisé dans l'inventaire
+	/**
+	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
+	 * 
+	 * renvoie le nombre d'emplacement utilisé dans l'inventaire
+	 */
 	public int poidsInventaire() {
 		int compteur=0;
 		for (int i = 0; i < inventaire.length; i++) {
@@ -73,24 +84,39 @@ public class Personnage extends Humain {
 		return compteur;
 	}
 	
-	//fonction d'ajout d'un objet dans l'inventaire
+	/**
+	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
+	 * 
+	 * @param o 
+	 * fonction d'ajout d'un objet dans l'inventaire
+	 */
+	//
 	public void ajouterInventaire(Objet o) {
 		int deja_ajoute=0;
+		//si l'inventaire n'est pas plein, on ajoute l'objet
 		if (poidsInventaire() != inventaire.length) {
 			for (int i = 0; i < poidsInventaire(); i++) {
+				//s'il s'agit d'un objet qui existe deja dans l'inventaire, on rajoute juste les quantité
 				if (inventaire[i].getNom() == o.getNom()) {
 					int a = o.getQuantite();
 					inventaire[i] = o;
 					inventaire[i].setQuantite(inventaire[i].getQuantite() + a);
 					deja_ajoute = 1;
 					System.out.println(o.getQuantite() + " " + o.getNom() + " ajouté(e)(s) à l'inventaire");
+					if (inventaire[i].getQuantite()>capacite_par_emplacement) {
+						inventaire[i].setQuantite(99);
+					}
 				}
 			}
+			//si l'objet n'a pas encore été ajouté à l'inventaire apres le test précédant, on ajoute l'objet
 			if (deja_ajoute != 1) {
 				int b = placeLibre();
 				if (b != -1) {
 					try {
 						inventaire[b] = o;
+						if (inventaire[b].getQuantite()>capacite_par_emplacement) {
+							inventaire[b].setQuantite(99);
+						}
 						System.out.println(o.getQuantite() + " " + o.getNom() + " ajouté(e)(s) à l'inventaire");
 					}catch (Exception e){
 						System.out.println("L'inventaire est plein !");
@@ -102,7 +128,11 @@ public class Personnage extends Humain {
 		}
 	}
 	
-	//fonction pour retirer un objet de l'inventaire et liberer la place
+	/**
+	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
+	 * 
+	 * fonction pour retirer un objet de l'inventaire et liberer la place
+	 */
 	public void jeterObjet() {
 		int action;
 		int nombre;
@@ -114,9 +144,11 @@ public class Personnage extends Humain {
 		//si l'indice de l'objet qu'on veut supprimé est incorrect
 		if (action < 0 || action > inventaire.length) {
 			System.out.println("Emplacement qui ne correspond pas à une place de l'inventaire");
+			
 		//s'il existe un objet avec un quantité supérieur à 1, on demande, combien d'objet retirer
 		}else if (inventaire[action] == null){
 			System.out.println("C'est un emplacement libre !");
+		//si l'objet qu'on veut supprimer est en quantité supérieur à 1, on demande de combien il faut diminuer le nombre d'objet
 		}else if(inventaire[action].getQuantite() > 1){
 			System.out.println("Combien voulez vous en retirer ?");
 			nombre = sc.nextInt();
@@ -137,10 +169,18 @@ public class Personnage extends Humain {
 			inventaire[action]=null;
 			reorganise(action);			
 		}
+		//affichage de l'inventaire apres la suppréssion
 		voirInventaire();
 	}
 	
-	
+	/**
+	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
+	 * 
+	 * @param a
+	 * a est un indice a partir duquel on commence à réorganiser
+	 * si l'inventaire est remplit et qu'il y a un emplacement vide entre les emplacement utilisé
+	 * on decale les objets de la meme maniere qu'une liste
+	 */
 	public void reorganise(int a) {
 		for (int i=a; i< inventaire.length-1; i++) {
 			inventaire[a]= inventaire[a+1];
@@ -148,7 +188,11 @@ public class Personnage extends Humain {
 		inventaire[inventaire.length-1]=null;
 	}
 	
-	//renvoie l'indice d'une place libre dans l'inventaire
+	/**
+	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
+	 * 
+	 * Renvoie l'indice d'une place libre dans l'inventaire
+	 */
 	public int placeLibre() {
 		int i = 0;
 		while (inventaire[i] != null && i < inventaire.length) {
@@ -310,4 +354,11 @@ public class Personnage extends Humain {
 		this.posture = posture;
 	}
 
+	public int getCapacite_par_emplacement() {
+		return capacite_par_emplacement;
+	}
+
+	public void setCapacite_par_emplacement(int capacite_par_emplacement) {
+		this.capacite_par_emplacement = capacite_par_emplacement;
+	}
 }

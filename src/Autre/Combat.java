@@ -21,7 +21,6 @@ public class Combat {
 	 * La classe combat permet d'opposer notre personnage à divers monstres.
 	 * Ce combat s'enclanche aléatoirement durant une exploration.
 	 * Le systeme de combat est au tour par tour.
-	 * 
 	 */
 	public Combat(Personnage perso) {
 		//partie génération du monstre de manière aléatoire

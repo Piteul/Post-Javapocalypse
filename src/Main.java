@@ -17,13 +17,10 @@ public class Main {
 		//simulation de combat
 		//Combat C = new Combat (p);
 		
-		p.ajouterInventaire(new ObjetVital("Eau usée", 2));
-		p.ajouterInventaire(new ObjetVital("Haricot en boite", 2));
-		p.ajouterInventaire(new ObjetVital("Eau propre", 2));
-		p.ajouterInventaire(new ObjetVital("Soda", 2));
-		p.ajouterInventaire(new ObjetVital("Viande cru", 2));
-		p.ajouterInventaire(new ObjetVital("Vitamine C", 2));
-		p.jeterObjet();
+		//test inventaire
+		//p.ajouterInventaire(new ObjetVital("Eau usée", 100));
+		//p.ajouterInventaire(new ObjetVital("Haricot en boite", 2));
+		//p.voirInventaire();
 		Jeu jeu = new Jeu();
 	}
 
