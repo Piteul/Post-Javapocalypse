@@ -34,7 +34,7 @@ public class Refuge {
 	 */
 
 	public void afficheMenu() {
-		int nb = outils.alea(0, 3);
+		int nb = (int)(Math.random() * 3);
 
 		switch (nb) {
 		case 0:
@@ -60,7 +60,6 @@ public class Refuge {
 		System.out.println("2. Faire un feu");
 		System.out.println("3. Ouvrir votre coffre");
 		System.out.println("4. Quitter votre refuge");
-
 	}
 
 	/**
@@ -81,9 +80,11 @@ public class Refuge {
 				seReposer();
 				break;
 			case 2:
+				faireFeu();
 				break;
-
 			case 3:
+				System.out.println("La fonction de gestion de coffre n'a pas entierement été implémantée...");
+				//gestionCoffre();
 				break;
 			case 4:
 				quitter();
@@ -111,17 +112,19 @@ public class Refuge {
 		}
 	}
 
+	
 	public void faireFeu() {
 		if (feu == true) {
 			System.out.println("Il y a déjà un feu d'allumé...");
 		} else {
-			for (int i = 0; i < p.poidsInventaire(); i++) {
+			for (int i = 0; i <= p.poidsInventaire(); i++) {
 				if (p.chercheObjet("Alumette") != -1 && p.chercheObjet("Combustible") != -1 && feu == false) {
 					System.out.println("Vous avez alumé un feu");
 					p.retirerObjet(p.chercheObjet("Alumette"));
 					p.retirerObjet(p.chercheObjet("Combustible"));
 					feu = true;
-				} else if ((p.chercheObjet("Alumette") == -1 || p.chercheObjet("Combustible") == -1)&& feu == false){
+					System.out.println("Vous avez allumé un feu.");
+				} else{
 					System.out.println("Vous n'avez pas les ressources requises pour faire un feu...");
 				}
 			}
@@ -136,29 +139,36 @@ public class Refuge {
 	// Partie Coffre
 
 	public void gestionCoffre() {
-
+		System.out.println("Menu du coffre");
+		System.out.println("1 - Deposer un objet");
+		System.out.println("2 - Echanger un objet de votre inventaire");
+		System.out.println("3 - Prendre un objet du coffre");
+		System.out.println("4 - Jeter un objet du coffre");
 		int choix = scan.nextInt();
 		scan.nextLine();
 
 		do {
+			System.out.println("-1 pour quitter ce menu.");
 			afficherCoffre();
 			menuCoffre();
 
 			switch (choix) {
 			case 1:
-				// ajouterCoffre();
+				ajouterCoffre();
 				break;
 			case 2:
-				// recupererCoffre();
+				echangerCoffre();
 				break;
 			case 3:
-				// detruireCoffre();
+				retirerCoffre();
+				break;
+			case 4:
+				supprimerCoffre();
 				break;
 			default:
 				System.out.println("Cette action n'existe pas");
 			}
-
-		} while (choix != 4);
+		} while (choix != -1);
 	}
 
 	
