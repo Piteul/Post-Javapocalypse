@@ -17,11 +17,10 @@ public class Monstre extends EtreVivant {
 	 * @param p_force
 	 * @param p_defense
 	 */
-	//variable qui definit si le monstre est en mode berserk
+	// variable qui definit si le monstre est en mode berserk
 	int berserk;
-	//palier en dessous duquel le monstre passe en mode berserk
+	// palier en dessous duquel le monstre passe en mode berserk
 	int palier;
-
 
 	public Monstre(String p_nom) {
 		super(p_nom);
@@ -80,13 +79,14 @@ public class Monstre extends EtreVivant {
 	 * @param adversaire
 	 */
 	public void attaquer(Personnage adversaire) {
-		System.out.println(this.getNom()+" attaque !");
+		System.out.println(this.getNom() + " attaque !");
 		if (Math.random() <= 0.10) {
 			System.out.println("Coup critique !");
 			adversaire.recevoirDegat(force * 2);
-		}else {
+		} else {
 			adversaire.recevoirDegat(force);
-		};
+		}
+		;
 	}
 
 	/**
@@ -109,9 +109,9 @@ public class Monstre extends EtreVivant {
 			degat = 0;
 		}
 		this.pointVie = pointVie - degat;
-		if (degat==0) {
+		if (degat == 0) {
 			System.out.println("Vous ne lui faite aucun degat. Il serait plus sage de fuir...");
-		}else {
+		} else {
 			System.out.println(this.getNom() + " a reçu " + degat + " point(s) de degat !");
 		}
 	}
@@ -131,13 +131,13 @@ public class Monstre extends EtreVivant {
 		System.out.println("Status : " + status);
 		System.out.println("--------------------");
 	}
-	
-	
+
 	/**
 	 * Getters et Setters
+	 * 
 	 * @return
 	 */
-	
+
 	public int getBerserk() {
 		return berserk;
 	}
@@ -145,7 +145,7 @@ public class Monstre extends EtreVivant {
 	public void setBerserk(int berserk) {
 		this.berserk = berserk;
 	}
-	
+
 	public int getPalier() {
 		return palier;
 	}
@@ -153,5 +153,5 @@ public class Monstre extends EtreVivant {
 	public void setPalier(int palier) {
 		this.palier = palier;
 	}
-	
+
 }

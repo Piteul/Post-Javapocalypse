@@ -18,7 +18,7 @@ public class Refuge {
 	int capacite_par_emplacement = 99;
 	Personnage p;
 	Outils outils = new Outils();
-	
+
 	private int posX, posY;
 	private boolean feu = false;
 
@@ -34,8 +34,9 @@ public class Refuge {
 	 */
 
 	public void afficheMenu() {
-		int nb = (int)(Math.random() * 3);
+		int nb = (int) (Math.random() * 3);
 
+		System.out.println();
 		switch (nb) {
 		case 0:
 			System.out.println("Vous voilà enfin rentré dans votre refuge après une perilleuse exploration.");
@@ -52,7 +53,7 @@ public class Refuge {
 		default:
 			System.out.println("Bienvenue au refuge");
 		}
-		
+
 		System.out.println(p.toString());
 		System.out.println();
 		System.out.println("Que souhaitez-vous faire :");
@@ -84,7 +85,7 @@ public class Refuge {
 				break;
 			case 3:
 				System.out.println("La fonction de gestion de coffre n'a pas entierement été implémantée...");
-				//gestionCoffre();
+				// gestionCoffre();
 				break;
 			case 4:
 				quitter();
@@ -100,33 +101,27 @@ public class Refuge {
 	 * Méthodes
 	 */
 	public void seReposer() {
-		if (feu==true) {
-		System.out.println("Vous tentez de vous reposer, tant bien que mal.\n");
-		p.setEndurance(30);
-		}else {
-			p.setEndurance(p.getEndurance()+10);
+		if (feu == true) {
+			System.out.println("Vous tentez de vous reposer, tant bien que mal en vous approchant du feu.\n");
+			p.setEndurance(50);
+			p.setPointVie(p.getPointVie() + 20);
+		} else {
 			System.out.println("Vous avez eu du mal a vous reposer sans un bon feu ...\n");
-			if (p.getEndurance()>30) {
-				p.setEndurance(30);
-			}
+			p.setEndurance(30);
 		}
 	}
 
-	
 	public void faireFeu() {
 		if (feu == true) {
 			System.out.println("Il y a déjà un feu d'allumé...");
 		} else {
-			for (int i = 0; i <= p.poidsInventaire(); i++) {
-				if (p.chercheObjet("Alumette") != -1 && p.chercheObjet("Combustible") != -1 && feu == false) {
-					System.out.println("Vous avez alumé un feu");
-					p.retirerObjet(p.chercheObjet("Alumette"));
-					p.retirerObjet(p.chercheObjet("Combustible"));
-					feu = true;
-					System.out.println("Vous avez allumé un feu.");
-				} else{
-					System.out.println("Vous n'avez pas les ressources requises pour faire un feu...");
-				}
+			if (p.chercheObjet("Allumette") != -1 && p.chercheObjet("Combustible") != -1 && feu == false) {
+				System.out.println("Vous avez allumé un feu");
+				p.retirerObjet(p.chercheObjet("Allumette"));
+				p.retirerObjet(p.chercheObjet("Combustible"));
+				feu = true;
+			} else {
+				System.out.println("Vous n'avez pas les ressources requises pour faire un feu...");
 			}
 		}
 	}
@@ -171,7 +166,6 @@ public class Refuge {
 		} while (choix != -1);
 	}
 
-	
 	public void ajouterCoffre() {
 		int deja_ajoute = 0;
 		int action;
@@ -180,39 +174,39 @@ public class Refuge {
 		p.voirInventaire();
 		System.out.println("Quel objet voulez vous déposer dans le coffre ?\n-1 pour quitter.");
 		action = scan.nextInt();
-		//si le coffre n'est pas plein ou que l'inventaire du personnage n'est pas vide
-		if (poidsCoffre()!=coffre.length || p.poidsInventaire()!=0) {
+		// si le coffre n'est pas plein ou que l'inventaire du personnage n'est pas vide
+		if (poidsCoffre() != coffre.length || p.poidsInventaire() != 0) {
 
 			if (action == -1) {
 				System.out.println("Vous avez quitté le menu d'echange d'objet.");
-			}else {
+			} else {
 				while (action < 0 || action > p.poidsInventaire()) {
 					System.out.println("Selectionnez un objet valide. Quel objet voulez vous déposer dans le coffre ?");
 					action = scan.nextInt();
 				}
-				//si l'objet qu'on veut mettre dans le coffre existe deja
+				// si l'objet qu'on veut mettre dans le coffre existe deja
 				for (int i = 0; i < poidsCoffre(); i++) {
-					if (coffre[i].getNom() == p.getInventaire()[action].getNom()){
+					if (coffre[i].getNom() == p.getInventaire()[action].getNom()) {
 						System.out.println("Combien voulez vous en déposer ?");
 						nombre = scan.nextInt();
 						while (nombre < 0 || nombre > p.getInventaire()[action].getQuantite()) {
 							System.out.println("Selectionnez un nombre valide. Combien voulez vous en déposer ?");
 							action = scan.nextInt();
 						}
-						//on ajoute l'objet au coffre
+						// on ajoute l'objet au coffre
 						Objet tmp = p.getInventaire()[action];
-						tmp.setQuantite(tmp.getQuantite()-nombre);
-						coffre[i].setQuantite(coffre[i].getQuantite()+p.getInventaire()[action].getQuantite());	
+						tmp.setQuantite(tmp.getQuantite() - nombre);
+						coffre[i].setQuantite(coffre[i].getQuantite() + p.getInventaire()[action].getQuantite());
 						p.retirerObjet(action);
 						p.ajouterInventaire(tmp);
 						deja_ajoute = 1;
 						System.out.println(tmp.getQuantite() + " " + tmp.getNom() + " ajouté(e)(s) au coffre");
-						if (coffre[i].getQuantite()>capacite_par_emplacement) {
+						if (coffre[i].getQuantite() > capacite_par_emplacement) {
 							coffre[i].setQuantite(99);
 						}
 					}
 				}
-				//si l'objet n'existe pas encore dans le coffre
+				// si l'objet n'existe pas encore dans le coffre
 				if (deja_ajoute != 1) {
 					System.out.println("xDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
 					System.out.println("Combien voulez vous en déposer ?");
@@ -225,38 +219,40 @@ public class Refuge {
 					int tmp = p.getInventaire()[action].getQuantite();
 					coffre[b] = p.getInventaire()[action];
 					coffre[b].setQuantite(nombre);
-					
-					if (coffre[b].getQuantite()>capacite_par_emplacement) {
+
+					if (coffre[b].getQuantite() > capacite_par_emplacement) {
 						coffre[b].setQuantite(99);
 					}
 
-					p.getInventaire()[action].setQuantite(tmp-nombre);
-					
+					p.getInventaire()[action].setQuantite(tmp - nombre);
+
 					System.out.println(nombre + " " + coffre[b].getNom() + " ajouté(e)(s) au coffre");
 					System.out.println(p.getInventaire()[action]);
 					afficherCoffre();
 				}
 			}
-		}else {
-			System.out.println("L'objet " + p.getInventaire()[action].getNom() + " n'a pas été ajouté au coffre...\nL'inventaire est vide ou le coffre est plein !");
+		} else {
+			System.out.println("L'objet " + p.getInventaire()[action].getNom()
+					+ " n'a pas été ajouté au coffre...\nL'inventaire est vide ou le coffre est plein !");
 		}
 	}
-	
+
 	public void echangerCoffre() {
 		int action_coffre;
 		int action_inventaire;
-		if (p.poidsInventaire()==0 && poidsCoffre()==0) {
+		if (p.poidsInventaire() == 0 && poidsCoffre() == 0) {
 			System.out.println("Le coffre est vide ou votre inventaire est vide.");
-		}else {
+		} else {
 			scan = new Scanner(System.in);
 			p.voirInventaire();
 			System.out.println("Quel objet de l'inventaire voulez vous echanger ?");
 			action_inventaire = scan.nextInt();
 			if (action_inventaire == -1) {
 				System.out.println("Vous avez quitté le menu d'echange d'objet.");
-			}else {
+			} else {
 				while (action_inventaire < 0 || action_inventaire > p.poidsInventaire()) {
-					System.out.println("Selectionnez un objet valide. Quel objet de l'inventaire voulez vous echanger ?");
+					System.out
+							.println("Selectionnez un objet valide. Quel objet de l'inventaire voulez vous echanger ?");
 					action_inventaire = scan.nextInt();
 				}
 				System.out.println("\n");
@@ -265,7 +261,7 @@ public class Refuge {
 				action_coffre = scan.nextInt();
 				if (action_coffre == -1) {
 					System.out.println("Vous avez quitté le menu d'echange d'objet.");
-				}else {
+				} else {
 					while (action_coffre < 0 || action_coffre > poidsCoffre()) {
 						System.out.println("Selectionnez un objet valide. Quel objet du coffre voulez vous echanger ?");
 						action_coffre = scan.nextInt();
@@ -278,23 +274,23 @@ public class Refuge {
 			}
 		}
 	}
-	
+
 	public void retirerCoffre() {
 		int action;
 		int nombre;
-		if (poidsCoffre()==0 || p.poidsInventaire() == p.getInventaire().length) {
+		if (poidsCoffre() == 0 || p.poidsInventaire() == p.getInventaire().length) {
 			System.out.println("Le coffre est vide ou votre inventaire est plein.");
-		}else {
+		} else {
 			System.out.println("Selectionnez l'objet que voulez prendre ?\n-1 pour quitter ce menu.");
 			scan = new Scanner(System.in);
 			action = scan.nextInt();
 			if (action == -1) {
 				System.out.println("Vous avez quitté le menu pour jeter un objet");
-			}else if (action < 0 || action > coffre.length) {
+			} else if (action < 0 || action > coffre.length) {
 				System.out.println("Emplacement qui ne correspond pas à une place du coffre!");
-			}else if (coffre[action] == null){
+			} else if (coffre[action] == null) {
 				System.out.println("C'est un emplacement libre !");
-			}else if (coffre[action].getQuantite()>1) {
+			} else if (coffre[action].getQuantite() > 1) {
 				System.out.println("Combien voulez vous en retirer ?");
 				scan = new Scanner(System.in);
 				nombre = scan.nextInt();
@@ -303,53 +299,54 @@ public class Refuge {
 					nombre = scan.nextInt();
 					System.out.println("Vous avez retiré " + nombre + " " + coffre[action].getNom() + " !");
 				}
-				
-				//manipulation qui permet d'ajouter le bon nombre d'objet dans l'inventaire
-				//cela est du a l'implémentation de la classe objet
+
+				// manipulation qui permet d'ajouter le bon nombre d'objet dans l'inventaire
+				// cela est du a l'implémentation de la classe objet
 				int tmp = coffre[action].getQuantite();
 				coffre[action].setQuantite(coffre[action].getQuantite() - (coffre[action].getQuantite() - nombre));
 				p.ajouterInventaire(coffre[action]);
 				System.out.println("Vous avez ajouté " + nombre + " " + coffre[action].getNom());
 				coffre[action].setQuantite(tmp - nombre);
-				
-				if (coffre[action].getQuantite()==0) {
+
+				if (coffre[action].getQuantite() == 0) {
 					System.out.println(coffre[action].getNom() + " a été retiré !");
-					coffre[action]=null;
+					coffre[action] = null;
 					reorganiseCoffre(action);
 				}
-			}else{
+			} else {
 				System.out.println(coffre[action].getNom() + " a été retiré !");
 				p.ajouterInventaire(coffre[action]);
-				coffre[action]=null;
-				reorganiseCoffre(action);				
+				coffre[action] = null;
+				reorganiseCoffre(action);
 			}
 			afficherCoffre();
 		}
 	}
-	
-	//retire un element du coffre choisi par le joueur
+
+	// retire un element du coffre choisi par le joueur
 	public void supprimerCoffre() {
 		int action;
 		int nombre;
 		afficherCoffre();
-		if (poidsCoffre()==0) {
+		if (poidsCoffre() == 0) {
 			System.out.println("L'inventaire est vide ...");
-		}else {
+		} else {
 			System.out.println("Selectionnez l'objet que voulez jeter ?\n-1 pour quitter ce menu.");
 			scan = new Scanner(System.in);
 			action = scan.nextInt();
-			
+
 			if (action == -1) {
 				System.out.println("Vous avez quitté le menu pour jeter un objet");
 			}
-			//si l'indice de l'objet qu'on veut supprimé est incorrect
+			// si l'indice de l'objet qu'on veut supprimé est incorrect
 			else if (action < 0 || action > coffre.length) {
 				System.out.println("Emplacement qui ne correspond pas à une place du coffre");
-			}else if (coffre[action] == null){
+			} else if (coffre[action] == null) {
 				System.out.println("C'est un emplacement libre !");
-				
-			//si l'objet qu'on veut supprimer est en quantité supérieur à 1, on demande de combien il faut diminuer le nombre d'objet
-			}else if(coffre[action].getQuantite() > 1){
+
+				// si l'objet qu'on veut supprimer est en quantité supérieur à 1, on demande de
+				// combien il faut diminuer le nombre d'objet
+			} else if (coffre[action].getQuantite() > 1) {
 				System.out.println("Combien voulez vous en retirer ?");
 				nombre = scan.nextInt();
 				while (nombre < 0 || nombre > coffre[action].getQuantite()) {
@@ -358,25 +355,25 @@ public class Refuge {
 					System.out.println("Vous avez retiré " + nombre + " " + coffre[action].getNom() + " !");
 				}
 				coffre[action].setQuantite(coffre[action].getQuantite() - nombre);
-				if (coffre[action].getQuantite()==0) {
+				if (coffre[action].getQuantite() == 0) {
 					System.out.println(coffre[action].getNom() + " a été retiré !");
-					coffre[action]=null;
+					coffre[action] = null;
 					reorganiseCoffre(action);
-				}	
-			//si l'objet n'existe qu'en un seul exemplaire, on le supprime simplement
-			}else {
+				}
+				// si l'objet n'existe qu'en un seul exemplaire, on le supprime simplement
+			} else {
 				System.out.println(coffre[action].getNom() + " a été retiré !");
-				coffre[action]=null;
-				reorganiseCoffre(action);			
+				coffre[action] = null;
+				reorganiseCoffre(action);
 			}
-			//affichage de l'inventaire apres la suppréssion
+			// affichage de l'inventaire apres la suppréssion
 			afficherCoffre();
 		}
 	}
-	
-	//reourne le nombre d'emplacements utilisés dans le coffre
+
+	// reourne le nombre d'emplacements utilisés dans le coffre
 	public int poidsCoffre() {
-		int compteur=0;
+		int compteur = 0;
 		for (int i = 0; i < coffre.length; i++) {
 			if (coffre[i] != null) {
 				compteur++;
@@ -384,7 +381,7 @@ public class Refuge {
 		}
 		return compteur;
 	}
-	
+
 	public int placeLibre() {
 		int i = 0;
 		while (coffre[i] != null && i < coffre.length) {
@@ -392,15 +389,14 @@ public class Refuge {
 		}
 		return i;
 	}
-	
+
 	public void reorganiseCoffre(int a) {
-		for (int i=a; i< coffre.length-1; i++) {
-			coffre[i]= coffre[i+1];
+		for (int i = a; i < coffre.length - 1; i++) {
+			coffre[i] = coffre[i + 1];
 		}
-		coffre[coffre.length-1]=null;
+		coffre[coffre.length - 1] = null;
 	}
-	
-	
+
 	public void menuCoffre() {
 		System.out.println("Que souhaitez-vous faire ?" + "\n1 - Ajouter un élément au coffre"
 				+ "\n2 - Récupérer un élément du coffre" + "\n3 - Détruire un élément du coffre"
@@ -411,7 +407,7 @@ public class Refuge {
 	public void afficherCoffre() {
 		System.out.println("============================");
 		System.out.println("= Contenu du coffre: ");
-		for (int i =0; i < coffre.length; i++) {
+		for (int i = 0; i < coffre.length; i++) {
 			if (coffre[i] != null) {
 				System.out.println("= " + i + " - " + coffre[i]);
 			}

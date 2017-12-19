@@ -11,6 +11,9 @@ import java.util.Scanner;
 import Autre.Combat;
 import Autre.Météo;
 import Autre.Refuge;
+import Objet.Arme;
+import Objet.ObjetDivers;
+import Objet.ObjetVital;
 import Outils.Outils;
 import Personnage.Personnage;
 
@@ -37,6 +40,11 @@ public class Jeu {
 	 */
 	public Jeu() {
 		perso = new Personnage(100);
+		perso.ajouterInventaire(new ObjetDivers("Combustible", 2));
+		perso.ajouterInventaire(new ObjetDivers("Allumette", 5));
+		perso.ajouterInventaire(new Arme("Pistolet"));
+		perso.ajouterInventaire(new ObjetVital("Eau usée",2));
+		
 		refuge = new Refuge(perso);
 		meteo = new Météo(perso);
 		demarrer();
@@ -146,7 +154,7 @@ public class Jeu {
 		System.out.println("\nAction");
 		System.out.println("------------");
 		System.out.println("1. Fouiller la zone");
-		System.out.println("2. Inventaire");
+		System.out.println("2. Ouvrir le sac à dos");
 
 		int nb = outils.alea(0, 3);
 		switch (nb) {
@@ -221,7 +229,7 @@ public class Jeu {
 				fouiller();
 				break;
 			case "2":
-				System.out.println(choix);
+				gererInventaire();
 				break;
 			case "3":
 				System.out.println("GAME OVER");
@@ -232,6 +240,40 @@ public class Jeu {
 			}
 		} while (choix != "3");
 
+	}
+
+	/**
+	 * Gère l'affichage et gestion des méthodes de l'inventaire
+	 */
+	public void gererInventaire() {
+		String choix;
+		int nb;
+		do {
+			perso.voirInventaire();
+			System.out.println();
+			System.out.println("1 - Utiliser objet");
+			System.out.println("2 - Jeter un objet de l'inventaire ");
+			System.out.println("3 - Refermer le sac à dos ");
+			choix = scan.next();
+			scan.nextLine();
+			System.out.println();
+
+			switch (choix) {
+			case "1":
+				System.out.println("Emplacement : ");
+				nb = scan.nextInt();
+				scan.nextLine();
+				System.out.println();
+				perso.utiliserObjet(perso.getInventaire()[nb], nb);
+				break;
+			case "2":
+				perso.jeterObjet();
+				break;
+			default :
+				System.out.println("Commande inexistante");
+
+			}
+		} while (choix.compareTo("3") != 0);
 	}
 
 	/**
