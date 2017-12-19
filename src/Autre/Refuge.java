@@ -198,20 +198,19 @@ public class Refuge {
 						action = scan.nextInt();
 					}
 					int b = placeLibre();
+					int tmp = p.getInventaire()[action].getQuantite();
 					coffre[b] = p.getInventaire()[action];
 					coffre[b].setQuantite(nombre);
 					
 					if (coffre[b].getQuantite()>capacite_par_emplacement) {
 						coffre[b].setQuantite(99);
 					}
-					
-					//p.getInventaire()[action].setQuantite(2);
 
+					p.getInventaire()[action].setQuantite(tmp-nombre);
 					
 					System.out.println(nombre + " " + coffre[b].getNom() + " ajouté(e)(s) au coffre");
-					
+					System.out.println(p.getInventaire()[action]);
 					afficherCoffre();
-					System.out.println(coffre[b]);
 				}
 			}
 		}else {

@@ -188,6 +188,21 @@ public class Personnage extends Humain {
 		}
 	}
 	
+	public void retirerObjetMultiple (int nombre, int place) {
+		System.out.println(nombre + " " + place);
+		System.out.println("lolololol" + inventaire[place]);
+		inventaire[place].setQuantite(inventaire[place].getQuantite() -nombre );
+		if (inventaire[place].getQuantite() == 0) {
+			System.out.println("Il n'y a plus de " + inventaire[place].getNom() + " dans votre invantaire...");
+			inventaire[place]=null;
+			reorganise(place);
+		}else {
+			System.out.println(nombre + " " + inventaire[place].getNom() + " a été retiré de l'inventaire. Il vous en reste " + inventaire[place].getQuantite());
+		}
+	}
+	
+	
+	
 	/**
 	 * Réorganise l'inventaire
 	 * @param a
