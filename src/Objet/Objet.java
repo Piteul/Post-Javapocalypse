@@ -17,6 +17,9 @@ public abstract class Objet {
 	
 	public Objet (String nom, int quantite) {
 		setNom(nom);
+		if (quantite <= 0) {
+			quantite = 0;
+		}
 		setQuantite(quantite);
 	}
 	

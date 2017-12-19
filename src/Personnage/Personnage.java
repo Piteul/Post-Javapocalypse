@@ -55,9 +55,9 @@ public class Personnage extends Humain {
 	}
 	
 	/**
-	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
-	 * 
 	 * visualisation de l'inventaire
+	 * 
+	 * 
 	 */
 	public void voirInventaire() {
 		System.out.println("============================");
@@ -71,9 +71,9 @@ public class Personnage extends Humain {
 	}
 	
 	/**
-	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
-	 * 
 	 * renvoie le nombre d'emplacement utilisé dans l'inventaire
+	 * 
+	 * 
 	 */
 	public int poidsInventaire() {
 		int compteur=0;
@@ -86,10 +86,10 @@ public class Personnage extends Humain {
 	}
 	
 	/**
-	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
+	 * fonction d'ajout d'un objet dans l'inventaire
 	 * 
 	 * @param o 
-	 * fonction d'ajout d'un objet dans l'inventaire
+	 * 
 	 */
 	//
 	public void ajouterInventaire(Objet o) {
@@ -112,71 +112,81 @@ public class Personnage extends Humain {
 			//si l'objet n'a pas encore été ajouté à l'inventaire apres le test précédant, on ajoute l'objet
 			if (deja_ajoute != 1) {
 				int b = placeLibre();
-				if (b != -1) {
-					try {
-						inventaire[b] = o;
-						if (inventaire[b].getQuantite()>capacite_par_emplacement) {
-							inventaire[b].setQuantite(99);
-						}
-						System.out.println(o.getQuantite() + " " + o.getNom() + " ajouté(e)(s) à l'inventaire");
-					}catch (Exception e){
-						System.out.println("L'inventaire est plein !");
-					}
-				}			
+				inventaire[b] = o;
+				if (inventaire[b].getQuantite()>capacite_par_emplacement) {
+					inventaire[b].setQuantite(99);
+				}
+				System.out.println(o.getQuantite() + " " + o.getNom() + " ajouté(e)(s) à l'inventaire");
 			}
 		}else {
-			System.out.println("L'inventaire est plein !!");
+			System.out.println("L'objet " + o.getNom() + " n'a pas été ajouté...\nL'inventaire est plein !");
 		}
 	}
 	
 	/**
-	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
-	 * 
 	 * fonction pour retirer un objet de l'inventaire et liberer la place
+	 * 
+	 * 
 	 */
 	public void jeterObjet() {
 		int action;
 		int nombre;
 		voirInventaire();
-		System.out.println("Selectionnez l'objet que voulez jeter ?");
-		sc = new Scanner(System.in);
-		action = sc.nextInt();
-
-		//si l'indice de l'objet qu'on veut supprimé est incorrect
-		if (action < 0 || action > inventaire.length) {
-			System.out.println("Emplacement qui ne correspond pas à une place de l'inventaire");
+		if (poidsInventaire()==0) {
+			System.out.println("L'inventaire est vide ...");
+		}else {
+			System.out.println("Selectionnez l'objet que voulez jeter ?\n-1 pour quitter ce menu.");
+			sc = new Scanner(System.in);
+			action = sc.nextInt();
 			
-		//s'il existe un objet avec un quantité supérieur à 1, on demande, combien d'objet retirer
-		}else if (inventaire[action] == null){
-			System.out.println("C'est un emplacement libre !");
-		//si l'objet qu'on veut supprimer est en quantité supérieur à 1, on demande de combien il faut diminuer le nombre d'objet
-		}else if(inventaire[action].getQuantite() > 1){
-			System.out.println("Combien voulez vous en retirer ?");
-			nombre = sc.nextInt();
-			while (nombre < 0 || nombre > inventaire[action].getQuantite()) {
-				System.out.println("Entrez une valeur correct");
-				nombre = sc.nextInt();
-				System.out.println("Vous avez retiré " + nombre + " " + inventaire[action].getNom() + " !");
+			if (action == -1) {
+				System.out.println("Vous avez quitté le menu pour jeter un objet");
 			}
-			inventaire[action].setQuantite(inventaire[action].getQuantite() - nombre);
-			if (inventaire[action].getQuantite()==0) {
+			//si l'indice de l'objet qu'on veut supprimé est incorrect
+			else if (action < 0 || action > inventaire.length) {
+				System.out.println("Emplacement qui ne correspond pas à une place de l'inventaire");
+			}else if (inventaire[action] == null){
+				System.out.println("C'est un emplacement libre !");
+				
+			//si l'objet qu'on veut supprimer est en quantité supérieur à 1, on demande de combien il faut diminuer le nombre d'objet
+			}else if(inventaire[action].getQuantite() > 1){
+				System.out.println("Combien voulez vous en retirer ?");
+				nombre = sc.nextInt();
+				while (nombre < 0 || nombre > inventaire[action].getQuantite()) {
+					System.out.println("Entrez une valeur correct");
+					nombre = sc.nextInt();
+					System.out.println("Vous avez retiré " + nombre + " " + inventaire[action].getNom() + " !");
+				}
+				inventaire[action].setQuantite(inventaire[action].getQuantite() - nombre);
+				if (inventaire[action].getQuantite()==0) {
+					System.out.println(inventaire[action].getNom() + " a été retiré !");
+					inventaire[action]=null;
+					reorganise(action);
+			}
+			//si l'objet n'existe qu'en un seul exemplaire, on le supprime simplement
+			}else {
 				System.out.println(inventaire[action].getNom() + " a été retiré !");
 				inventaire[action]=null;
-				reorganise(action);
+				reorganise(action);			
+			}
+			//affichage de l'inventaire apres la suppréssion
+			voirInventaire();
 		}
-		//si l'objet n'existe qu'en un seul exemplaire, on le supprime simplement
-		}else {
-			System.out.println(inventaire[action].getNom() + " a été retiré !");
-			inventaire[action]=null;
-			reorganise(action);			
-		}
-		//affichage de l'inventaire apres la suppréssion
-		voirInventaire();
 	}
 	
 	
-	
-	
+	//retire un exemplaire d'un objet
+	//utile pour les objet a usage unique ou objet que l'on doit utiliser qu'une fois pour certaines actions
+	public void retirerObjet(int place) {
+		inventaire[place].setQuantite(inventaire[place].getQuantite() -1 );
+		if (inventaire[place].getQuantite() == 0) {
+			System.out.println(1 + " " + inventaire[place].getNom() + " a été retiré de l'inventaire. Il ne vous en reste plus...");
+			inventaire[place]=null;
+			reorganise(place);
+		}else {
+			System.out.println(1 + " " + inventaire[place].getNom() + " a été retiré de l'inventaire. Il vous en reste " + inventaire[place].getQuantite());
+		}
+	}
 	
 	/**
 	 * Réorganise l'inventaire
@@ -187,7 +197,7 @@ public class Personnage extends Humain {
 	 */
 	public void reorganise(int a) {
 		for (int i=a; i< inventaire.length-1; i++) {
-			inventaire[a]= inventaire[a+1];
+			inventaire[i]= inventaire[i+1];
 		}
 		inventaire[inventaire.length-1]=null;
 	}
