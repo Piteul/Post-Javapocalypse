@@ -1,95 +1,124 @@
 package Autre;
 
+import Outils.Outils;
+import Personnage.Personnage;
+
 /**
  * Classe qui définit les différentes météos
+ * 
  * @author Axel Tétart
  *
  */
 
 public class Météo {
-	private int cout_endurance;
-	private int cout_point_vie;
+	Outils outils = new Outils();
+	private int coutPV;
+	private int coutEnd;
 	private String nom;
+	String tabNom[] = { "Vaste grisaille", "Pluie radioactive", "Grand froid", "Grêles tranchantes",
+			"Soleil vert" };
 
+	Personnage perso;
 
 	/**
 	 * Constructeur
+	 * 
 	 * @param nom
 	 */
-	
-	public Météo (String nom) {
-		attribution(nom);
+
+	public Météo(Personnage p) {
+		perso = p;
+		rendementAleatoire();
 	}
-	
-	
+
+	/**
+	 * Détermine de manière aléatoire la météo
+	 */
+	public void rendementAleatoire() {
+		int nb = outils.alea(0, 10);
+		System.out.println("!!!!!!!"+nb);
+		switch (nb) {
+		case 4:
+		case 8:
+			setNom(tabNom[1]); // Pluie radioactive
+			coutPV = (int) Math.round(perso.getPointVie() * 0.05);
+			coutEnd = 0;
+			break;
+		case 6:
+			setNom(tabNom[2]); // Grand froid
+			coutPV = 0;
+			coutEnd = (int) Math.round(perso.getEndurance() * 0.1);
+			break;
+		case 2:
+			setNom(tabNom[3]); // Grêles tranchantes
+			coutPV = (int) Math.round(perso.getPointVie() * 0.1);
+			coutEnd = (int) Math.round(perso.getEndurance() * 0.05);
+			break;
+		case 3:
+		case 9:
+			setNom(tabNom[4]); // Soleil vert
+			System.out.println(getNom());
+			System.out.println(perso.getEndurance());
+			System.out.println(coutEnd);
+			coutPV = 0;
+			coutEnd = (int) Math.round(perso.getEndurance() * 0.05);
+			break;
+		default:
+			setNom(tabNom[0]); // Vaste grisaille
+			coutPV = 0;
+			coutEnd = 0;
+			break;
+		}
+
+	}
+
 	/**
 	 * Détermine les effet que la météo aura sur le personnage
+	 * 
 	 * @param nom
 	 */
-	
-	public void attribution(String nom) {
-		switch (nom) {
+
+	public void action() {
+		switch (getNom()) {
 
 		case "Vaste grisaille":
-			setCout_endurance(0);
-			setCout_point_vie(0);
 			break;
 		case "Pluie radioactive":
-			setCout_endurance(0);
-			setCout_point_vie(5);
+			perso.setPointVie(perso.getPointVie() - coutPV);
 			break;
 		case "Grand froid":
-			setCout_endurance(5);
-			setCout_point_vie(0);
+			perso.setEndurance(perso.getEndurance() - coutEnd);
 			break;
 		case "Grêles tranchantes":
-			setCout_endurance(2);
-			setCout_point_vie(10);
+			perso.setPointVie(perso.getPointVie() - coutPV);
+			perso.setEndurance(perso.getEndurance() - coutEnd);
 			break;
 		case "Soleil vert":
-			setCout_endurance(2);
-			setCout_point_vie(0);
-			break;			
+			perso.setEndurance(perso.getEndurance() - coutEnd);
+			break;
 		default:
 			System.out.println("Météo inexistante");
 			break;
 		}
 	}
-	
+
+	/**
+	 * Affiche la météo et les coûts relatifs.
+	 */
 	public void afficherMeteo() {
-		System.out.println("Météo actuelle : " + nom);
-		System.out.println("Effet sur l'endurance : -" + getCout_endurance());
-		System.out.println("Effet sur la santé : -" + getCout_point_vie());
+		System.out.println("Météo actuelle : " + nom + ", Point(s) de vie : -" + coutPV + ", Endurance : -" + coutEnd);
 	}
-	
-	
+
 	/*
 	 * Getters & Setters
 	 */
-	
+
 	public String getNom() {
 		return nom;
 	}
 
-
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
-	public int getCout_endurance() {
-		return cout_endurance;
-	}
 
-	public void setCout_endurance(int cout_endurance) {
-		this.cout_endurance = cout_endurance;
-	}
-
-	public int getCout_point_vie() {
-		return cout_point_vie;
-	}
-
-	public void setCout_point_vie(int cout_point_vie) {
-		this.cout_point_vie = cout_point_vie;
-	}
-	
 }

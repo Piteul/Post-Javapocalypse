@@ -18,22 +18,20 @@ public class Refuge {
 	Personnage p;
 	Outils outils = new Outils();
 	private int posX, posY;
-	private int feu=0;
+	private boolean feu = false;
 
 	/**
 	 * Constructeur
 	 */
 	public Refuge(Personnage perso) {
 		p = perso;
-		outils = new Outils();
-		//seReposer();
-		faireFeu();
 	}
 
 	/**
-	 * Menu d'affichage du refuge
+	 * Affiche menu de commande du refuge
 	 */
-	public void menu() {
+
+	public void afficheMenu() {
 		int nb = outils.alea(0, 3);
 
 		switch (nb) {
@@ -54,23 +52,40 @@ public class Refuge {
 		}
 
 		System.out.println();
-		System.out.println("Que souhaitez-vous faire ?");
+		System.out.println("Que souhaitez-vous faire :");
+		System.out.println("1. Se reposer");
+		System.out.println("2. Faire un feu");
+		System.out.println("3. Ouvrir votre coffre");
+		System.out.println("4. Quitter votre refuge");
 
-		nb = scan.nextInt();
-		scan.nextLine();
+	}
 
-		switch (nb) {
-		case 1:
-			System.out.println("");
-			break;
-		case 2:
-			break;
+	/**
+	 * Menu d'affichage du refuge
+	 * 
+	 * @return
+	 */
+	public void menuRefuge() {
+		int choix;
+		do {
+			afficheMenu();
+			System.out.print("\nChoix : ");
+			choix = scan.nextInt();
+			scan.nextLine();
+			System.out.println();
+			switch (choix) {
+			case 1:
+				System.out.println("");
+				break;
+			case 2:
+				break;
 
-		case 3:
-			break;
-		default:
-			System.out.println("Vous procrastinez, comme l'a fait l'humanité toute entière pour en arriver là");
-		}
+			case 3:
+				break;
+			default:
+				System.out.println("Vous procrastinez, comme l'a fait l'humanité toute entière pour en arriver là");
+			}
+		} while (choix != 4);
 
 	}
 
@@ -82,24 +97,26 @@ public class Refuge {
 	}
 
 	public void faireFeu() {
-		if (feu == 1) {
-			System.out.println("Il y a deja un feu...");
-		}else {
-			for (int i =0; i < p.poidsInventaire(); i++) {
+		if (feu == true) {
+			System.out.println("Il y a déjà un feu d'allumé...");
+		} else {
+			for (int i = 0; i < p.poidsInventaire(); i++) {
 				if (p.chercheObjet("Alumette") != -1 && p.chercheObjet("Combustible") != -1) {
-					feu = 1;
+					feu = true;
 					System.out.println("Vous avez alumé un feu");
-					p.getInventaire()[p.chercheObjet("Alumette")].setQuantite(p.getInventaire()[p.chercheObjet("Alumette")].getQuantite()-1);
-					p.getInventaire()[p.chercheObjet("Combustible")].setQuantite(p.getInventaire()[p.chercheObjet("Combustible")].getQuantite()-1);
-				}else {
+					p.getInventaire()[p.chercheObjet("Alumette")]
+							.setQuantite(p.getInventaire()[p.chercheObjet("Alumette")].getQuantite() - 1);
+					p.getInventaire()[p.chercheObjet("Combustible")]
+							.setQuantite(p.getInventaire()[p.chercheObjet("Combustible")].getQuantite() - 1);
+				} else {
 					System.out.println("Vous n'avez pas les ressources requises pour faire un feu...");
 				}
 			}
 		}
 	}
-	
-	public Personnage quitter() {
-		return p;
+
+	public void quitter() {
+		feu = false; // à chaque départ, le feu est éteint
 	}
 
 	// Partie Coffre
@@ -145,8 +162,6 @@ public class Refuge {
 			System.out.println("\t" + nb + ". " + obj.toString());
 		}
 	}
-	
-	
 
 	public void affichePosition() {
 		System.out.println("Pos x : " + getPosX() + ", " + "Pos y : " + getPosY());

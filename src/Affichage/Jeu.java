@@ -1,6 +1,7 @@
 package Affichage;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import Autre.Combat;
+import Autre.Météo;
 import Autre.Refuge;
 import Outils.Outils;
 import Personnage.Personnage;
@@ -24,30 +26,48 @@ public class Jeu {
 	private int dimY;
 	private Case grille[][];
 	private Scanner scan = new Scanner(System.in);
-	private boolean dansRefuge = true;
 	Outils outils = new Outils();
-	Personnage perso = new Personnage(100);
-	Refuge refuge = new Refuge(perso);
-	Combat c;
+	Personnage perso;
+	Refuge refuge;
+	Combat combat;
+	Météo meteo;
 
 	/**
 	 * Constructeur
 	 */
 	public Jeu() {
+		perso = new Personnage(100);
+		refuge = new Refuge(perso);
+		meteo = new Météo(perso);
+		demarrer();
+	}
 
+	public void demarrer() {
 		try {
 			lectureFichier();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		refuge.affichePosition();
-		menu();
+
+		if (perso.isDansRefuge()) {
+			refuge.menuRefuge();
+		} else {
+			sortirRefuge();
+			menuJeu();
+		}
 	}
 
 	/**
-	 * Permet de lire le fichier carte.txt et générer la carte qui sera définit
-	 * dedans La première ligne correspond au nombre de ligne qu'aura la grille
-	 * (hauteur) La deuxième ligne correspond à la longueur de chaque ligne
+	 * public Jeu(Personnage p) { //constructeur en cours de partie perso = p;
+	 * perso.setDansRefuge(false); try { lectureFichier(); } catch (IOException e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * if (perso.isDansRefuge()) { refuge.menuRefuge(); } else { sortirRefuge();
+	 * menuJeu(); }
+	 * 
+	 * } // /** Permet de lire le fichier carte.txt et générer la carte qui sera
+	 * définit dedans La première ligne correspond au nombre de ligne qu'aura la
+	 * grille (hauteur) La deuxième ligne correspond à la longueur de chaque ligne
 	 * (longueur) Le reste est la composition de la grille et qui doit respecter les
 	 * dimensions données.
 	 * 
@@ -131,7 +151,11 @@ public class Jeu {
 	 */
 	public void afficheMenu() {
 		System.out.println("Que souhaitez-vous faire :");
-		System.out.println("\nDéplacement" + "\n Haut -> z" + "\n Bas -> s" + "\n Gauche -> q" + "\n Droite -> d");
+		System.out.println("\nDéplacement");
+		System.out.println("------------");
+		System.out.println("z. Haut" + "\ns. Bas" + "\nq. Gauche" + "\nd. Droite");
+		System.out.println("\nAction");
+		System.out.println("------------");
 		System.out.println("1. Fouiller la zone");
 		System.out.println("2. Inventaire");
 
@@ -151,22 +175,47 @@ public class Jeu {
 	}
 
 	/**
+	 * Regroupe les multiples fonctions d'affichages
+	 */
+	public void affichageGlobal() {
+		afficheGrille();
+		System.out.println();
+		System.out.println();
+		meteo.afficherMeteo();
+		System.out.println("Vous êtes en " + grille[perso.getPosX()][perso.getPosY()].getDescription() + ".");
+		System.out.println("Point(s) de vie : " + perso.getPointVie());
+		System.out.println("Endurance : " + perso.getEndurance());
+		System.out.println();
+		afficheMenu();
+		System.out.print("\nChoix : ");
+	}
+
+	/**
 	 * Gère l'affichage principal du jeu
 	 */
-	public void menu() {
+	public void menuJeu() {
 		String choix;
 		do {
-			afficheGrille();
-			System.out.println();
-			System.out.println();
-			afficheMenu();
-			System.out.print("\nChoix : ");
+			affichageGlobal();
 			choix = scan.next();
 			scan.nextLine();
 			System.out.println();
+
+			// condition de fin
+			if (!(perso.estVivant())) {
+				System.out.println("Vous êtes mort !");
+				choix = "3";
+			}
 			switch (choix) {
 			case "z":
-				System.out.println("Haut");
+			case "s":
+			case "q":
+			case "d":
+				if (perso.getEndurance() > 0) { // se déplacer nécessite de l'endurance
+					deplacement(choix);
+				} else {
+					System.out.println("Plus assez d'endurance pour se déplacer.");
+				}
 				break;
 			case "1":
 				break;
@@ -176,10 +225,83 @@ public class Jeu {
 			case "3":
 				System.exit(0);
 				break;
-
 			}
 		} while (choix != "3");
 
+	}
+
+	/**
+	 * Fonctionne qui détermine de quel côté sortira le héros du refuge
+	 */
+	public void sortirRefuge() {
+		int x = refuge.getPosX();
+		int y = refuge.getPosY();
+
+		if (grille[x][y + 1] == null) { // si refuge côté droit, perso sort du côté gauche
+			grille[x][y - 1].placerPerso();
+			perso.setPosition(x, y - 1);
+		} else { // sinon sort par défaut du côté droit
+			grille[x][y + 1].placerPerso();
+			perso.setPosition(x, y + 1);
+		}
+
+	}
+
+	/**
+	 * Gère visuellement le déplacement du personnage
+	 * 
+	 * @param d
+	 */
+	public void deplacement(String d) {
+		int x = perso.getPosX();
+		int y = perso.getPosY();
+
+		switch (d) {
+		case "z": // haut
+			if (x - 1 < 0) {
+				System.out.println("Impossible d'aller plus haut");
+			} else {
+				grille[x][y].symboleOriginal(); // on remet l'ancien symbole
+				grille[x - 1][y].placerPerso(); // la nouvelle case obtient le symbole du personnage
+				perso.setPosition(x - 1, y); // on met à jour la position du personnage
+				meteo.action();
+			}
+			break;
+		case "s": // bas
+			if (x + 1 >= getDimX()) {
+				System.out.println("Impossible d'aller plus bas");
+			} else {
+				grille[x][y].symboleOriginal();
+				grille[x + 1][y].placerPerso();
+				perso.setPosition(x + 1, y);
+				meteo.action();
+
+			}
+			break;
+		case "q": // gauche
+			if (y - 1 < 0) {
+				System.out.println("Impossible d'aller à gauche");
+			} else {
+				grille[x][y].symboleOriginal();
+				grille[x][y - 1].placerPerso();
+				perso.setPosition(x, y - 1);
+				meteo.action();
+
+			}
+			break;
+		case "d": // droite
+			if (y + 1 >= getDimY()) {
+				System.out.println("Impossible d'aller à droite");
+			} else {
+				grille[x][y].symboleOriginal();
+				grille[x][y + 1].placerPerso();
+				perso.setPosition(x, y + 1);
+				meteo.action();
+			}
+			break;
+		default:
+			System.out.println("La pirouette c'est qu'il n'y en a pas.");
+		}
 	}
 
 	/**

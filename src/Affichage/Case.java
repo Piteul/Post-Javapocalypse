@@ -87,6 +87,24 @@ public class Case {
 
 	}
 	
+	/**
+	 * Place visuellement le joueur sur cette case
+	 */
+	public void placerPerso() {
+		setSymbole('$');
+	}
+	
+	/**
+	 * Permet de remettre le symbole de départ correspond à cette case
+	 */
+	public void symboleOriginal() {
+		if(this.description == "Zone hostile") {
+			setSymbole('*');
+		}else {
+			setSymbole('#');
+		}
+	}
+	
 
 	/**
 	 * Getters et Setters
@@ -98,6 +116,7 @@ public class Case {
 	public void setSymbole(char symbole) {
 		this.symbole = symbole;
 	}
+	
 
 	public String getDescription() {
 		return description;

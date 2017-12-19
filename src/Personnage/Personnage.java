@@ -23,14 +23,15 @@ public class Personnage extends Humain {
 	static int defense = 5;
 	String posture = "Offensif";
 	double survie = 1.2;
-	int endurance = 50;
+	int endurance = 30;
 	Objet inventaire[] = new Objet[10];
 	int capacite_par_emplacement=99;
 
 
 	Arme arme = new Arme("Couteau");
 	private int posX, posY; //position du joueur dans la grille;
-	
+	private boolean dansRefuge = false;
+
 
 	/**
 	 * Constructeur
@@ -326,6 +327,11 @@ public class Personnage extends Humain {
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
+	
+	public void setPosition(int x, int y) {
+		this.posX = x;
+		this.posY = y;
+	}
 
 	public double getSurvie() {
 		return survie;
@@ -373,5 +379,13 @@ public class Personnage extends Humain {
 
 	public void setCapacite_par_emplacement(int capacite_par_emplacement) {
 		this.capacite_par_emplacement = capacite_par_emplacement;
+	}
+
+	public boolean isDansRefuge() {
+		return dansRefuge;
+	}
+
+	public void setDansRefuge(boolean dansRefuge) {
+		this.dansRefuge = dansRefuge;
 	}
 }

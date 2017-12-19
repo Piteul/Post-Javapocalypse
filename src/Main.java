@@ -10,13 +10,12 @@ import Outils.Outils;
 
 public class Main {
 
-	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		//initialisation du personnage
-		Personnage p = new Personnage(100);
-		p.setPointVie(20);
-		Refuge r = new Refuge (p);
-		System.out.println(p.getPointVie());
+		//Personnage p = new Personnage(100);
+		//p.setPointVie(20);
+		//Refuge r = new Refuge (p);
+		//System.out.println(p.getPointVie());
 		//simulation de combat
 		//Combat C = new Combat (p);
 		
@@ -25,7 +24,7 @@ public class Main {
 		//p.ajouterInventaire(new ObjetVital("Haricot en boite", 2));
 		//p.voirInventaire();
 		//p.jeterObjet();
-		//Jeu jeu = new Jeu();
+		Jeu jeu = new Jeu();
 	}
 
 }
