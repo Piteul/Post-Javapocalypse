@@ -193,6 +193,7 @@ public class Jeu {
 				} while (perso.isDansRefuge());
 				grille[refuge.getPosX()][refuge.getPosY()].symboleOriginal();
 				sortirRefuge();
+				meteo = new Météo(perso);
 			}
 
 			affichageGlobal();
@@ -340,7 +341,7 @@ public class Jeu {
 	 */
 	public void generationCombat() {
 		double nb = Math.random();
-		if (perso.estVivant() && grille[perso.getPosX()][perso.getPosY()].getSymbole() == '*') {
+		if (perso.estVivant() && grille[perso.getPosX()][perso.getPosY()].getDescription() == "Zone hostile") {
 			if (nb < 0.15) {
 				combat = new Combat(perso);
 			}
