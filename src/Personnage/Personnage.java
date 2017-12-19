@@ -40,20 +40,19 @@ public class Personnage extends Humain {
 	public Personnage(int p_pointVie) {
 		super(nom, p_pointVie, status, force, defense);
 	}
+	
+	/**
+	 * Return les informations principales du personnage
+	 */
+	public String toString() {
+		return "\nPoint(s) de vie : " + getPointVie() + "\nEndurance : " + getEndurance(); 
+
+	}
 
 	/**
 	 * Partie exploration
 	 */
 
-	// sur la carte
-	public void seDeplacer() {
-
-	}
-
-	public void fouiller() {
-
-	}
-	
 	/**
 	 * Permet d'attribuer les caractéristiques du monstre à partir de son nom
 	 * 
@@ -227,7 +226,7 @@ public class Personnage extends Humain {
 	}
 
 	
-	
+	//////////////////////////////////////////////////////////////////////
 	/**
 	 * Partie Combat
 	 */
@@ -308,6 +307,7 @@ public class Personnage extends Humain {
 	}
 
 	
+	/////////////////////////////////////////////////////////////////
 	
 	/**
 	 * Getters et Setters

@@ -50,7 +50,8 @@ public class Refuge {
 		default:
 			System.out.println("Bienvenue au refuge");
 		}
-
+		
+		System.out.println(p.toString());
 		System.out.println();
 		System.out.println("Que souhaitez-vous faire :");
 		System.out.println("1. Se reposer");
@@ -75,12 +76,15 @@ public class Refuge {
 			System.out.println();
 			switch (choix) {
 			case 1:
-				System.out.println("");
+				seReposer();
 				break;
 			case 2:
 				break;
 
 			case 3:
+				break;
+			case 4:
+				quitter();
 				break;
 			default:
 				System.out.println("Vous procrastinez, comme l'a fait l'humanité toute entière pour en arriver là");
@@ -93,7 +97,8 @@ public class Refuge {
 	 * Méthodes
 	 */
 	public void seReposer() {
-		this.p.setPointVie(100);
+		System.out.println("Vous tentez de vous reposer, tant bien que mal.\n");
+		this.p.setEndurance(30);
 	}
 
 	public void faireFeu() {
@@ -117,6 +122,7 @@ public class Refuge {
 
 	public void quitter() {
 		feu = false; // à chaque départ, le feu est éteint
+		p.setDansRefuge(false);
 	}
 
 	// Partie Coffre

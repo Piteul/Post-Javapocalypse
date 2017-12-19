@@ -36,7 +36,6 @@ public class Météo {
 	 */
 	public void rendementAleatoire() {
 		int nb = outils.alea(0, 10);
-		System.out.println("!!!!!!!"+nb);
 		switch (nb) {
 		case 4:
 		case 8:
@@ -82,6 +81,7 @@ public class Météo {
 		switch (getNom()) {
 
 		case "Vaste grisaille":
+			perso.setEndurance(perso.getEndurance()-1);
 			break;
 		case "Pluie radioactive":
 			perso.setPointVie(perso.getPointVie() - coutPV);
