@@ -149,12 +149,12 @@ public class Jeu {
 	public void afficheMenu() {
 		System.out.println("Que souhaitez-vous faire :");
 		System.out.println("\nDéplacement");
-		System.out.println("------------");
-		System.out.println("z. Haut" + "\ns. Bas" + "\nq. Gauche" + "\nd. Droite");
+		System.out.println("--------------------------------------------------");
+		System.out.println("z. Haut" + "		s. Bas" + "		q. Gauche" + "		d. Droite");
 		System.out.println("\nAction");
-		System.out.println("------------");
-		System.out.println("1. Fouiller la zone");
-		System.out.println("2. Ouvrir le sac à dos");
+		System.out.println("--------------------------------------------------");
+		System.out.println("1. Fouiller la zone 		2. Ouvrir le sac à dos");
+		
 
 		int nb = outils.alea(0, 3);
 		switch (nb) {
