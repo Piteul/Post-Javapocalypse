@@ -3,6 +3,7 @@ import Affichage.Jeu;
 import Autre.Combat;
 import Autre.Refuge;
 import Objet.Arme;
+import Objet.ObjetDivers;
 import Objet.ObjetVital;
 import Outils.Outils;
 
@@ -12,9 +13,28 @@ public class Main {
 
 	public static void main(String[] args) {
 		//initialisation du personnage
-		//Personnage p = new Personnage(100);
-		//p.setPointVie(20);
-		//Refuge r = new Refuge (p);
+		Personnage p = new Personnage(100);
+		p.setPointVie(20);
+		p.ajouterInventaire(new ObjetDivers("lol0", 1));
+		p.ajouterInventaire(new ObjetDivers("lol1", 1));
+		p.ajouterInventaire(new ObjetDivers("lol2", 1));
+		p.ajouterInventaire(new ObjetDivers("lol3", 1));
+		p.ajouterInventaire(new ObjetDivers("lol4", 100));
+		p.ajouterInventaire(new ObjetDivers("lol5", 1));
+		p.ajouterInventaire(new ObjetDivers("lol6", 1));
+		p.ajouterInventaire(new ObjetDivers("lol7", 1));
+		p.ajouterInventaire(new ObjetDivers("lol8", 1));
+		p.ajouterInventaire(new ObjetDivers("lol9", 1));
+		p.voirInventaire();
+
+
+		Refuge r = new Refuge (p);
+		r.ajouterCoffre();
+		
+		/*
+		p.ajouterInventaire(new ObjetDivers("Alumette", 1));
+		p.ajouterInventaire(new ObjetDivers("Combustible", 1));
+		r.faireFeu();*/
 		//System.out.println(p.getPointVie());
 		//simulation de combat
 		//Combat C = new Combat (p);
@@ -24,7 +44,7 @@ public class Main {
 		//p.ajouterInventaire(new ObjetVital("Haricot en boite", 2));
 		//p.voirInventaire();
 		//p.jeterObjet();
-		Jeu jeu = new Jeu();
+		//Jeu jeu = new Jeu();
 	}
 
 }
