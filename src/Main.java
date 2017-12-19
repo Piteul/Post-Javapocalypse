@@ -12,7 +12,7 @@ import Outils.Outils;
 public class Main {
 
 	public static void main(String[] args) {
-		//initialisation du personnage
+		/*
 		Personnage p = new Personnage(100);
 		p.setPointVie(20);
 		p.ajouterInventaire(new ObjetDivers("lol0", 1));
@@ -30,7 +30,7 @@ public class Main {
 
 		Refuge r = new Refuge (p);
 		r.ajouterCoffre();
-		
+		*/
 		/*
 		p.ajouterInventaire(new ObjetDivers("Alumette", 1));
 		p.ajouterInventaire(new ObjetDivers("Combustible", 1));
@@ -44,7 +44,7 @@ public class Main {
 		//p.ajouterInventaire(new ObjetVital("Haricot en boite", 2));
 		//p.voirInventaire();
 		//p.jeterObjet();
-		//Jeu jeu = new Jeu();
+		Jeu jeu = new Jeu();
 	}
 
 }

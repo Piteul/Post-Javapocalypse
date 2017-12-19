@@ -49,25 +49,14 @@ public class Jeu {
 			e.printStackTrace();
 		}
 
-		if (perso.isDansRefuge()) {
-			refuge.menuRefuge();
-		} else {
-			sortirRefuge();
-			menuJeu();
-		}
+		sortirRefuge();
+		menuJeu();
 	}
 
 	/**
-	 * public Jeu(Personnage p) { //constructeur en cours de partie perso = p;
-	 * perso.setDansRefuge(false); try { lectureFichier(); } catch (IOException e) {
-	 * e.printStackTrace(); }
-	 * 
-	 * if (perso.isDansRefuge()) { refuge.menuRefuge(); } else { sortirRefuge();
-	 * menuJeu(); }
-	 * 
-	 * } // /** Permet de lire le fichier carte.txt et générer la carte qui sera
-	 * définit dedans La première ligne correspond au nombre de ligne qu'aura la
-	 * grille (hauteur) La deuxième ligne correspond à la longueur de chaque ligne
+	 * Permet de lire le fichier carte.txt et générer la carte qui sera définit
+	 * dedans La première ligne correspond au nombre de ligne qu'aura la grille
+	 * (hauteur) La deuxième ligne correspond à la longueur de chaque ligne
 	 * (longueur) Le reste est la composition de la grille et qui doit respecter les
 	 * dimensions données.
 	 * 
@@ -183,8 +172,7 @@ public class Jeu {
 		System.out.println();
 		meteo.afficherMeteo();
 		System.out.println("Vous êtes en " + grille[perso.getPosX()][perso.getPosY()].getDescription() + ".");
-		System.out.println("Point(s) de vie : " + perso.getPointVie());
-		System.out.println("Endurance : " + perso.getEndurance());
+		System.out.println(perso.toString());
 		System.out.println();
 		afficheMenu();
 		System.out.print("\nChoix : ");
@@ -196,6 +184,18 @@ public class Jeu {
 	public void menuJeu() {
 		String choix;
 		do {
+
+			// si le joueur est sur la case refuge
+			if (perso.getPosX() == refuge.getPosX() && perso.getPosY() == refuge.getPosY()) {
+				perso.setDansRefuge(true);
+				do {
+					refuge.menuRefuge();
+				} while (perso.isDansRefuge());
+				grille[refuge.getPosX()][refuge.getPosY()].symboleOriginal();
+				sortirRefuge();
+				meteo = new Météo(perso);
+			}
+
 			affichageGlobal();
 			choix = scan.next();
 			scan.nextLine();
@@ -218,13 +218,17 @@ public class Jeu {
 				}
 				break;
 			case "1":
+				fouiller();
 				break;
 			case "2":
 				System.out.println(choix);
 				break;
 			case "3":
+				System.out.println("GAME OVER");
 				System.exit(0);
 				break;
+			default:
+				System.out.println("Commande inexistante");
 			}
 		} while (choix != "3");
 
@@ -265,6 +269,7 @@ public class Jeu {
 				grille[x - 1][y].placerPerso(); // la nouvelle case obtient le symbole du personnage
 				perso.setPosition(x - 1, y); // on met à jour la position du personnage
 				meteo.action();
+				generationCombat();
 			}
 			break;
 		case "s": // bas
@@ -275,6 +280,7 @@ public class Jeu {
 				grille[x + 1][y].placerPerso();
 				perso.setPosition(x + 1, y);
 				meteo.action();
+				generationCombat();
 
 			}
 			break;
@@ -286,6 +292,7 @@ public class Jeu {
 				grille[x][y - 1].placerPerso();
 				perso.setPosition(x, y - 1);
 				meteo.action();
+				generationCombat();
 
 			}
 			break;
@@ -297,10 +304,47 @@ public class Jeu {
 				grille[x][y + 1].placerPerso();
 				perso.setPosition(x, y + 1);
 				meteo.action();
+				generationCombat();
+
 			}
 			break;
 		default:
 			System.out.println("La pirouette c'est qu'il n'y en a pas.");
+		}
+	}
+
+	/**
+	 * Gère la récupération d'objet dans la case
+	 */
+	public void fouiller() {
+		int x = perso.getPosX();
+		int y = perso.getPosY();
+
+		if (perso.getEndurance() > 0) {
+
+			if (grille[x][y].getObjet() == null) {
+				System.out.println("Vous ne trouvez rien.");
+			} else {
+				System.out.println("Vous avez trouvé : " + grille[x][y].getObjet().getNom());
+				perso.ajouterInventaire(grille[x][y].getObjet());
+				grille[x][y].setObjet(null);
+			}
+			perso.setEndurance(perso.getEndurance() - 1);
+
+		} else {
+			System.out.println("Vous n'avez plus assez d'endurance pour fouiller la zone.");
+		}
+	}
+
+	/**
+	 * Génère aléatoirement un combat
+	 */
+	public void generationCombat() {
+		double nb = Math.random();
+		if (perso.estVivant() && grille[perso.getPosX()][perso.getPosY()].getDescription() == "Zone hostile") {
+			if (nb < 0.15) {
+				combat = new Combat(perso);
+			}
 		}
 	}
 

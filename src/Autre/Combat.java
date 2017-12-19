@@ -107,6 +107,8 @@ public class Combat {
 							tour++;
 							break;
 						}
+					default :
+						System.out.println("Commande inexistante");
 					}
 					
 				//tour du monstre
