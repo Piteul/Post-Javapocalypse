@@ -99,8 +99,16 @@ public class Refuge {
 	 * Méthodes
 	 */
 	public void seReposer() {
+		if (feu==true) {
 		System.out.println("Vous tentez de vous reposer, tant bien que mal.\n");
-		this.p.setEndurance(30);
+		p.setEndurance(30);
+		}else {
+			p.setEndurance(p.getEndurance()+10);
+			System.out.println("Vous avez eu du mal a vous reposer sans un bon feu ...\n");
+			if (p.getEndurance()>30) {
+				p.setEndurance(30);
+			}
+		}
 	}
 
 	public void faireFeu() {
